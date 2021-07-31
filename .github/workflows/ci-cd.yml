@@ -26,4 +26,4 @@ jobs:
     - run: npm install
     - run: npm install -g @angular/cli > /dev/null
     - run: ng build --prod --output-path=dist
-    - run: ng test
+    - run: npm run test
