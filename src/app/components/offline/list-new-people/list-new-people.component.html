@@ -1,0 +1,11 @@
+<ul class="followers" *ngIf="user != null">
+    <li>
+        <figure><img src="{{user.img}}" alt="">
+        </figure>
+        <div class="friend-meta">
+            <h4><a class="cursor-pointer" [routerLink]="['/' + user.username]">{{user.firstName + ' ' +
+                    user.lastName}}</a></h4>
+            <a class="cursor-pointer" (click)="sendFolower(user)" class=" cursor-pointer underline">Followers</a>
+        </div>
+    </li>
+</ul>

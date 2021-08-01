@@ -245,7 +245,7 @@ section {
 }
 
 .pattern:before {
-    background: #088dcd url("../images/dot-pattern.png") repeat scroll 0 0;
+    /*background: #088dcd url("../images/dot-pattern.png") repeat scroll 0 0;*/
     opacity: 0.45;
 }
 
