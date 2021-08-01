@@ -1,0 +1,77 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ master, developer ]
+  pull_request:
+    branches: [ master, developer ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Setup Node
+      uses: actions/setup-node@v1 #this will install Node and npm on Ubuntu
+      with:
+        node-version: '12.x'
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - run: npm install
+    - run: npm install -g @angular/cli > /dev/null
+    - run: ng build --prod --output-path=dist
+    - run: npm run test
+    - name: Create semantic version
+      id: versioning
+      uses: paulhatch/semantic-version@v4.0.2
+      with:
+        tag_prefix: ""
+        major_pattern: "(MAJOR)"
+        minor_pattern: "(MINOR)"
+        format: "${major}.${minor}.${patch}"
+        short_tags: false
+        bump_each_commit: true
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    - name: Build image and publish to DockerHub
+      run: |
+        chmod 777 ./build-upload-publish.sh
+        ./build-upload-publish.sh ${{ steps.versioning.outputs.version }} ${{ secrets.DOCKER_PASSWORD }} ${{ secrets.DOCKER_USERNAME }}
+    - name: Build nistagram-front artifact
+      working-directory: .
+      run: |
+        npm ci
+        CI=false npm run build --if-present
+    - name: Upload nistagram-front artifact to repository
+      uses: actions/upload-artifact@v2
+      with: 
+        name: nistagram-front-${{ steps.versioning.outputs.version }}
+        path: ./build
+    - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          append_to_pre_release_tag: ""
+          default_bump: major
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
+          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+          prerelease: false
