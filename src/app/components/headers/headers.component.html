@@ -1,0 +1,104 @@
+<div class="responsive-header">
+    <div class="mh-head first Sticky">
+        <span class="mh-btns-left">
+            <a class="" href="#menu"><i class="fa fa-align-justify"></i></a>
+        </span>
+        <span class="mh-text">
+            <a class="cursor-pointer" [routerLink]="['/']"><img src="../assets/images/logo2.png" alt=""></a>
+        </span>
+    </div>
+
+    <nav id="menu" class="res-menu">
+        <ul *ngIf="isOnlineOffline()">
+            <li><a class="cursor-pointer" [routerLink]="['/']" title="">Home</a></li>
+            <li><a class="cursor-pointer" [routerLink]="['/notifications']">Notifications</a></li>
+            <li><a class="cursor-pointer" [routerLink]="['/messages']">Messages</a></li>
+            <li><span>Account</span>
+                <ul>
+                    <li><a class="cursor-pointer" [routerLink]="['/' + user.username]">View Profile</a></li>
+                    <li><a class="cursor-pointer" [routerLink]="['/' + user.username + '/edit']">Edit Profile</a></li>
+                </ul>
+            </li>
+            <li><a class="cursor-pointer" (click)="logout()">Log out</a></li>
+        </ul>
+        <ul *ngIf="!isOnlineOffline()">
+            <li><a class="cursor-pointer" [routerLink]="['/login']" title="">Login</a></li>
+            <li><a class="cursor-pointer" [routerLink]="['/registration']">Create Profile</a></li>
+        </ul>
+    </nav>
+
+</div><!-- responsive header -->
+
+<div class="topbar stick">
+    <div class="logo">
+        <a class="cursor-pointer" [routerLink]="['/']"><img src="../assets/images/logo.png" alt=""></a>
+    </div>
+
+    <div class="top-area">
+        <div class="top-search">
+            <form method="post" class="">
+                <input type="text" placeholder="Search Friend">
+                <button data-ripple><i class="ti-search"></i></button>
+            </form>
+        </div>
+        <ul class="setting-area" *ngIf="isOnlineOffline()">
+            <li><a href="#" title="Home" data-ripple=""><i class="ti-home"></i></a></li>
+            <li>
+                <a href="#" title="Notification" data-ripple="">
+                    <i class="ti-bell"></i><span>{{notifications.length}}</span>
+                </a>
+                <div class="dropdowns">
+                    <span>{{notifications.length > 0 ? notifications.length + ' New Notifications' : 'No Notifications'}}</span>
+                    <ul class="drops-menu">
+                        <li *ngFor="let item of notifications">
+                            <a class="cursor-pointer" [routerLink]="['/notifications/' + item.id]">
+                                <img src="{{item.user.img}}" alt="">
+                                <div class="mesg-meta">
+                                    <h6>{{item.user.firstName + ' ' + item.user.lastName}}</h6>
+                                    <span>{{item.text}}</span>
+                                    <i>{{item.datetime}}</i>
+                                </div>
+                            </a>
+                            <span class="tag green">New</span>
+                        </li>
+                    </ul>
+                    <a class="more-mesg cursor-pointer" [routerLink]="['/notification']">View More</a>
+                </div>
+            </li>
+            <li>
+                <a href="#" title="Messages" data-ripple=""><i class="ti-comment"></i><span>{{messages.length}}</span></a>
+                <div class="dropdowns">
+                    <span>{{messages.length > 0 ? messages.length + ' New Messages' : 'No Messages'}}</span>
+                    <ul class="drops-menu">
+                        <li *ngFor="let item of messages">
+                            <a class="cursor-pointer" [routerLink]="['/messages/' + item.id]">
+                                <img src="{{item.user.img}}" alt="">
+                                <div class="mesg-meta">
+                                    <h6>{{item.user.firstName + " " + item.user.lastName}}</h6>
+                                    <span>{{item.text}}</span>
+                                    <i>{{item.datetime}}</i>
+                                </div>
+                            </a>
+                            <span class="tag green">New</span>
+                        </li>
+                    </ul>
+                    <a href="#" title="" class="more-mesg">View More</a>
+                </div>
+            </li>
+        </ul>
+        <ul class="setting-area " *ngIf="!isOnlineOffline()">
+            <li><a class="cursor-pointer" [routerLink]="['/login']" data-ripple="">Login</a>
+            </li>
+            <li><a class="cursor-pointer" [routerLink]="['/registration']" data-ripple="">Create Profile</a></li>
+        </ul>
+        <div class="user-img" *ngIf="isOnlineOffline()">
+            <img src="{{user.img}}" alt="" width="50px" height="50px">
+            <span class="status f-online"></span>
+            <div class="user-setting">
+                <a class="cursor-pointer" [routerLink]="['/registration']"><i class="ti-user"></i> View Profile</a>
+                <a class="cursor-pointer" [routerLink]="['/registration']"><i class="ti-pencil-alt"></i>Edit Profile</a>
+                <a class="cursor-pointer" (click)="logout()"><i class="ti-power-off"></i>Log out</a>
+            </div>
+        </div>
+    </div>
+</div><!-- topbar -->
