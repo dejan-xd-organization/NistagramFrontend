@@ -9,15 +9,7 @@ export class AppComponent implements OnInit {
   title = 'NistagramFrontend';
 
   ngOnInit(): void {
-    let user = {
-      id: 1,
-      firstName: "Dejan",
-      lastName: "Jovanović",
-      username: "dejan",
-      img: "../../../../assets/images/resources/user-avatar.jpg"
-    }
 
-    localStorage.setItem("user", JSON.stringify(user))
   }
 
   getStatusOnline() {

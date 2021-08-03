@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticateService } from 'src/app/services/authenticate.service';
+import { OfflineHomeService } from 'src/app/services/offline-home.service';
 import { Global } from 'src/app/global/global';
 import { OnlineHomeService } from 'src/app/services/online-home.service';
 
@@ -11,12 +11,10 @@ import { OnlineHomeService } from 'src/app/services/online-home.service';
 export class HeadersComponent implements OnInit {
 
   user: any;
-  messages: any;
-  notifications: any;
-  constructor(private auth: AuthenticateService, private global: Global, private online: OnlineHomeService) {
+  messages: any = null;
+  notifications: any = null;
+  constructor(private offline: OfflineHomeService, private global: Global, private online: OnlineHomeService) {
     this.user = localStorage.getItem('user');
-    this.messages = null;
-    this.notifications = null;
   }
 
   ngOnInit(): void {
@@ -34,10 +32,11 @@ export class HeadersComponent implements OnInit {
   }
 
   isOnlineOffline() {
+    if (this.user == null) this.getUser()
     return this.global.isOnlineOffline();
   }
 
   logout() {
-    this.auth.logout();
+    this.offline.logout();
   }
 }

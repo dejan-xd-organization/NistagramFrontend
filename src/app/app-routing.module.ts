@@ -1,6 +1,8 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { NotAuthGuard } from './guard/not-auth.guard';
+
 import { LoginComponent } from './components/offline/login/login.component';
 import { RegistrationComponent } from './components/offline/registration/registration.component';
 import { OfficialHomeComponent } from './components/official-home/official-home.component';
@@ -15,8 +17,8 @@ import { ImagesComponent } from './components/online/images/images.component';
 
 const routes: Routes = [
   { path: '', component: OfficialHomeComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'registration', component: RegistrationComponent },
+  { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
+  { path: 'registration', component: RegistrationComponent, canActivate: [NotAuthGuard] },
   { path: 'notifications', component: NotificationsComponent },
   { path: 'notifications/:id', component: NotificationsComponent },
   { path: 'messages', component: MessagesComponent },

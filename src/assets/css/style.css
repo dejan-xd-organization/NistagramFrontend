@@ -2548,7 +2548,7 @@ footer .logo {
 }
 
 .theme-layout::before {
-    background: url(../images/dot-pattern.png);
+    /*background: url(../images/dot-pattern.png);*/
     background-repeat: repeat;
     content: "";
     height: 100%;

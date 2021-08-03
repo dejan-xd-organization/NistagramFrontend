@@ -1,11 +1,32 @@
 import { Injectable } from '@angular/core';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class OfflineHomeService {
 
   constructor() { }
+
+  login(credentials: any) {
+    let user = {
+      id: 1,
+      firstName: "Dejan",
+      lastName: "Jovanović",
+      username: "dejan",
+      img: "../../../../assets/images/resources/user-avatar.jpg"
+    }
+    localStorage.setItem('user', JSON.stringify(user))
+    localStorage.setItem('JWT', JSON.stringify({ jwt: 'aNo301o1n312o3j01nono1j!!!"=$%(!=40123n1o23012h3 01h031n' }))
+    window.location.reload();
+    return true;
+  }
+
+  logout() {
+    localStorage.removeItem('JWT');
+    localStorage.removeItem('user');
+    window.location.reload();
+  }
 
   getNews(isOffline: Boolean) {
     return [
