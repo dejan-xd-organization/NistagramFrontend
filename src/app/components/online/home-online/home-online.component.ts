@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Global } from 'src/app/global/global';
 import { OnlineHomeService } from 'src/app/services/online-home.service';
+import { OfflineHomeService } from 'src/app/services/offline-home.service';
 
 @Component({
   selector: 'app-home-online',
@@ -19,7 +20,7 @@ export class HomeOnlineComponent implements OnInit {
   notificationsCount: any = null;
   followersCount: any = null;
   followingCount: any = null;
-  constructor(private global: Global, private online: OnlineHomeService) {
+  constructor(private global: Global, private online: OnlineHomeService, private offline: OfflineHomeService) {
     this.newPost = {
       user: null,
       text: null
@@ -72,5 +73,9 @@ export class HomeOnlineComponent implements OnInit {
 
   getFollowers() {
     this.followers = this.online.getFollowers();
+  }
+
+  logout() {
+    this.offline.logout();
   }
 }

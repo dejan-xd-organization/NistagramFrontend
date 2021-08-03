@@ -51,6 +51,7 @@ import { ImagesComponent } from './components/online/images/images.component';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    NotAuthGuard,
     { provide: APP_BASE_HREF, useValue: '' }
   ],
   bootstrap: [AppComponent]
