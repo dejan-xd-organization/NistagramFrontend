@@ -1,1 +1,38 @@
-<p>registration works!</p>
+<div class="theme-layout">
+	<div class="container-fluid pdng0">
+		<div class="row merged">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="login-reg-bg">
+					<div class="log-reg-area sign">
+						<h2 class="log-title">Registration</h2>
+						<form method="post">
+                        	<div class="form-group">	
+							  <input type="text" id="input" name="firstName" [(ngModel)]="firstName" required="required"/>
+							  <label class="control-label" for="input">First Name</label><i class="mtrl-select"></i>
+							</div>
+                            <div class="form-group">	
+							  <input type="text" id="input" name="lastName" [(ngModel)]="lastName" required="required"/>
+							  <label class="control-label" for="input">Last Name</label><i class="mtrl-select"></i>
+							</div>
+                            <div class="form-group">	
+							  <input type="email" id="input" name="email" [(ngModel)]="email" required="required"/>
+							  <label class="control-label" for="input">Email Address</label><i class="mtrl-select"></i>
+							</div>
+							<div class="form-group">	
+							  <input type="text" id="input" name="username" [(ngModel)]="username" required="required"/>
+							  <label class="control-label" for="input">Username</label><i class="mtrl-select"></i>
+							</div>
+							<div class="form-group">	
+							  <input type="password" name="password" [(ngModel)]="password" required="required"/>
+							  <label class="control-label" for="input">Password</label><i class="mtrl-select"></i>
+							</div>
+							<div class="submit-btns">
+								<button class="mtr-btn signin" (click)="registration()" type="button"><span>Register</span></button>
+							</div>
+						</form>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

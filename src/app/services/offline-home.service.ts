@@ -28,6 +28,10 @@ export class OfflineHomeService {
     window.location.reload();
   }
 
+  registration(user: any) {
+    return true;
+  }
+
   getNews(isOffline: Boolean) {
     return [
       {
