@@ -80,7 +80,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: deploy_test
-          path: ../TEST
+          path: ../../TEST
   deploy:
     runs-on: ubuntu-latest
     needs: build
