@@ -94,6 +94,10 @@ jobs:
         uses: K-Phoen/semver-release-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      - uses: codfish/semantic-release-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     
     
     
