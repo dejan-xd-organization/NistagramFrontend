@@ -75,13 +75,11 @@ jobs:
         with:
           name: deploy_dist
           path: dist
-      -   run: 'mkdir results'
-      -   run: 'mkdir results\artifacts'
-      -   run: 'dir $( $GITHUB_WORKSPACE )'
-      -   run: 'env | Where-Object {$_ | Select-String "GITHUB_"} | sort > results\artifacts\ci-env.txt'
+      -   run: 'mkdir --parents results/artifacts'
+      -   run: 'env | grep GITHUB_ | sort > results/artifacts/ci-env.txt'
       -   uses: actions/upload-artifact@v2
           with:
-              name: artifacts_from_windows
+              name: artifacts_from_ubuntu
               path: results/artifacts/
      # - name: Archive code coverage result
      #   if: success()
@@ -94,12 +92,13 @@ jobs:
     needs: build
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Download build
         uses: actions/download-artifact@v1
         with:
           name: deploy_dist
       - name: Deploy to GitHub Pages
+        id: gcloud
         uses: dejan-xd-organization/NistagramFrontend@master
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
