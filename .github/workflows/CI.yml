@@ -77,7 +77,7 @@ jobs:
           path: dist
       - name: Archive code coverage result
         if: success()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v1
         with:
           name: deploy_test
           path: TEST
@@ -86,15 +86,28 @@ jobs:
     needs: build
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
       - name: Download build
         uses: actions/download-artifact@v1
         with:
           name: deploy_dist
       - name: Deploy to GitHub Pages
-        uses: dejan-xd-organization/NistagramFrontend@v2
+        uses: dejan-xd-organization/NistagramFrontend@releases/v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
           FOLDER: deploy_dist/test
+          
+  job_example_upload_windows:
+        runs-on: windows-latest
+        name: '[Windows] Upload artifacts'
+        steps:
+            -   run: 'mkdir results'
+            -   run: 'mkdir results\artifacts'
+            -   run: 'dir $( $GITHUB_WORKSPACE )'
+            -   run: 'env | Where-Object {$_ | Select-String "GITHUB_"} | sort > results\artifacts\ci-env.txt'
+            -   uses: actions/upload-artifact@v2
+                with:
+                    name: artifacts_from_windows
+                    path: results/artifacts/
     
