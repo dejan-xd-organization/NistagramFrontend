@@ -77,22 +77,22 @@ jobs:
           path: dist
       - name: Archive code coverage result
         if: success()
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: deploy_test
-          path: ../../TEST
+          path: TEST
   deploy:
     runs-on: ubuntu-latest
     needs: build
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
       - name: Download build
         uses: actions/download-artifact@v1
         with:
           name: deploy_dist
       - name: Deploy to GitHub Pages
-        uses: dejan-xd-organization/NistagramFrontend@v1
+        uses: dejan-xd-organization/NistagramFrontend@v2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
