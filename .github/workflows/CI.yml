@@ -58,12 +58,14 @@ jobs:
       with:
         name: deploy_dist
         path: dist
-    -   run: 'mkdir --parents results/artifacts'
-    -   run: 'env | grep GITHUB_ | sort > results/artifacts/ci-env.txt'
-    -   uses: actions/upload-artifact@v2
-        with:
-            name: artifacts_from_ubuntu
-            path: results/artifacts/
+    - name: Create directory results/artifacts 
+      run: 'mkdir --parents results/artifacts'
+    - name: Create ci-env.txt in path directory
+      run: 'env | grep GITHUB_ | sort > results/artifacts/ci-env.txt'
+    - uses: actions/upload-artifact@v2
+      with:
+          name: artifacts_from_ubuntu
+          path: results/artifacts/
   
   Deploy:
     runs-on: ubuntu-latest
