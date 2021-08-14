@@ -79,8 +79,8 @@ jobs:
         if: success()
         uses: actions/upload-artifact@v1
         with:
-          name: deploy_coverage
-          path: coverage
+          name: deploy_test
+          path: TEST
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -96,5 +96,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: nesto/test
+          FOLDER: deploy_dist/test
     
