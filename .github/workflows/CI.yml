@@ -82,6 +82,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     
+      - name: Check Out Repo SonarCloud
+        uses: actions/checkout@v2
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+          
+          
+    
       - id: bump
         uses: dejan-xd-organization/NistagramFrontend@master
         with:
@@ -92,11 +100,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
     
     
-      - name: Check Out Repo SonarCloud
-        uses: actions/checkout@v2
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting
-          fetch-depth: 0
+    
+
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
