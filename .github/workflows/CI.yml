@@ -90,13 +90,10 @@ jobs:
     
     
     
-      - name: Run goreleaser
-        uses: goreleaser/goreleaser-action@v1
+      - name: Bump version and push tag
+        uses: hennejg/github-tag-action@v4.1.jh1
         with:
-          version: latest
-          args: release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
     
     
     
