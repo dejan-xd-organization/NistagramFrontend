@@ -83,10 +83,10 @@ jobs:
     steps:
     
       - id: bump
-        uses: dejan-xd-organization/NistagramFrontend@v1
+        uses: dejan-xd-organization/NistagramFrontend@master
         with:
           allowed: major,minor,patch
-      - uses: dejan-xd-organization/NistagramFrontend@v1
+      - uses: dejan-xd-organization/NistagramFrontend@master
         with:
           bump: ${{ steps.bump.outputs.match }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
