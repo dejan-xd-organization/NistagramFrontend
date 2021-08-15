@@ -140,4 +140,23 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Build image
+        run: |
+          docker build -t test_image:latest -<<EOF
+          FROM busybox
+          RUN touch abc.txt
+          EOF
+
+      - name: Upload image
+        uses: ishworkh/docker-image-artifact-upload@v1
+        with:
+          image: "test_image:latest"
     
