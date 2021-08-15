@@ -142,7 +142,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           
   Container:
-    name: Docker Image Artifact Upload
     runs-on: ubuntu-latest
     steps:
       - name: Checkout project
@@ -164,5 +163,5 @@ jobs:
       - name: Upload image
         uses: ishworkh/docker-image-artifact-upload@v1
         with:
-          image: "test_image:latest"
+          image: "frontend:latest"
     
