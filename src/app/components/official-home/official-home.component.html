@@ -1,0 +1,7 @@
+<div *ngIf="!isOfflineOnline()">
+    <app-home></app-home>
+</div>
+
+<div *ngIf="isOfflineOnline()">
+    <app-home-online></app-home-online>
+</div>
