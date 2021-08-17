@@ -1,0 +1,56 @@
+<div class="loadMore" *ngIf="post != null">
+    <div class="central-meta item">
+        <div class="user-post">
+            <div class="friend-info">
+                <figure>
+                    <img src="{{post.ownerPost.img}}" alt="">
+                </figure>
+                <div class="friend-name">
+                    <ins><a class="cursor-pointer" [routerLink]="['/' + post.ownerPost.username]"
+                            title="">{{post.ownerPost.firstName + ' ' + post.ownerPost.lastName}}</a></ins>
+                    <span>published: {{post.timePublis}}</span>
+                </div>
+                <div class="post-meta">
+                    <img *ngIf="post.imagePost !== null" src="{{post.imagePost}}" alt="">
+                    <div class="we-video-info">
+                        <ul>
+                            <li>
+                                <span class="like" data-toggle="tooltip" title="like">
+                                    <i class="ti-heart"></i>
+                                    <ins>{{post.likes}}</ins>
+                                </span>
+                            </li>
+                            <li>
+                                <span class="dislike" data-toggle="tooltip" title="dislike">
+                                    <i class="ti-heart-broken"></i>
+                                    <ins>{{post.unlike}}</ins>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="description">
+                        <p>{{post.descriptionPost}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="coment-area">
+                <ul class="we-comet">
+                    <li *ngFor="let comment of post.comments">
+                        <div class="comet-avatar">
+                            <img src="{{comment.user.img}}" alt="">
+                        </div>
+                        <div class="we-comment">
+                            <div class="coment-head">
+                                <h5><a class="cursor-pointer"
+                                        [routerLink]="['/' + comment.user.username]">{{comment.user.firstName + ' ' +
+                                        comment.user.lastName}}</a></h5>
+                                <span>{{comment.timeDateComments}}</span>
+                            </div>
+                            <p>{{comment.comment}}</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
