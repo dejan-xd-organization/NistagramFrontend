@@ -21,10 +21,9 @@ export class LoginComponent implements OnInit {
       password: this.password
     };
 
-    let isLogedIn = this.offline.login(credentials);
-    if (!isLogedIn) {
-      alert("Invalid credentials. Please log in again.")
-    }
+    this.offline.login(credentials).subscribe((res: any) => {
+      if (!res) alert("Invalid credentials. Please log in again.")
+    });
   }
 
 }

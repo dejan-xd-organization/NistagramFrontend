@@ -3,6 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HomeComponent } from './home.component';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { OfflineHomeService } from 'src/app/services/offline-home.service';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
@@ -69,19 +71,19 @@ describe('HomeComponent', () => {
       }
     ]
 
+    let newPeopleObservable = of(newPeople)
+
     let offlineServiceMock = {
       getNews: jasmine.createSpy('getNews')
         .and.returnValue(newNews),
       newPeople: jasmine.createSpy('newPeople')
-        .and.returnValue(newPeople),
-      RegenerateData$: {
-        subscribe: jasmine.createSpy('subscribe')
-      }
+        .and.returnValue(newPeopleObservable)
     }
 
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        HttpClientTestingModule
       ],
       declarations: [HomeComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -102,13 +104,18 @@ describe('HomeComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    const service: OfflineHomeService = TestBed.get(OfflineHomeService);
+    expect(service).toBeTruthy();
   });
 
   it('should get all news', () => {
-    component.getAllOfflienOptions()
-    expect(component.allPost.length).toEqual(1)
-    expect(component.newPeoples.length).toEqual(2)
+    component.getAllOfflienOptions();
+    expect(component.allPost.length).toEqual(1);
+    expect(component.newPeoples.length).toEqual(2);
+  });
 
+  it('should have newPeople function', () => {
+    const service: OfflineHomeService = TestBed.get(OfflineHomeService);
+    expect(service.newPeople).toBeTruthy();
   });
 });
