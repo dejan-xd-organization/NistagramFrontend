@@ -24,7 +24,11 @@ export class HomeComponent implements OnInit {
 
   getAllOfflienOptions() {
     this.allPost = this.home.getNews(false);
-    this.newPeoples = this.home.newPeople();
+    this.home.newPeople().subscribe((res: any) => {
+      this.newPeoples = res;
+    }, (error: any) => {
+      this.newPeoples = [];
+    });
   }
 
   onAddComment(event: any) { }

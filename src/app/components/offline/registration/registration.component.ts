@@ -29,11 +29,10 @@ export class RegistrationComponent implements OnInit {
       password: this.password
     }
 
-    let isRegistrationSuccess = this.offline.registration(registrationObject);
-    if (!isRegistrationSuccess) {
-      alert("Provided data is not valid. Please fill again.")
-    }
-    else this.router.navigate(['/login'])
+    this.offline.registration(registrationObject).subscribe((res: any) => {
+      if (!res) alert("Provided data is not valid. Please fill again.")
+      else this.router.navigate(['/login'])
+    });
   }
 
 }

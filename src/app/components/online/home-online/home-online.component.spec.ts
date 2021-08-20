@@ -4,6 +4,7 @@ import { HomeOnlineComponent } from './home-online.component';
 import { OnlineHomeService } from 'src/app/services/online-home.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('HomeOnlineComponent', () => {
   let component: HomeOnlineComponent;
@@ -42,7 +43,8 @@ describe('HomeOnlineComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        FormsModule
+        FormsModule,
+        HttpClientTestingModule
       ],
       declarations: [HomeOnlineComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
