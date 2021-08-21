@@ -72,10 +72,11 @@ describe('HomeComponent', () => {
     ]
 
     let newPeopleObservable = of(newPeople)
+    let newNewsObservable = of(newNews)
 
     let offlineServiceMock = {
-      getNews: jasmine.createSpy('getNews')
-        .and.returnValue(newNews),
+      getWallPosts: jasmine.createSpy('getWallPosts')
+        .and.returnValue(newNewsObservable),
       newPeople: jasmine.createSpy('newPeople')
         .and.returnValue(newPeopleObservable)
     }
@@ -108,7 +109,7 @@ describe('HomeComponent', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should get all news', () => {
+  it('should get all wall posts', () => {
     component.getAllOfflienOptions();
     expect(component.allPost.length).toEqual(1);
     expect(component.newPeoples.length).toEqual(2);
