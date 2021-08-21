@@ -23,7 +23,11 @@ export class HomeComponent implements OnInit {
   }
 
   getAllOfflienOptions() {
-    this.allPost = this.home.getNews(false);
+    this.home.getWallPosts().subscribe((res: any) => {
+      this.allPost = res;
+    }, (error: any) => {
+      this.allPost = [];
+    })
     this.home.newPeople().subscribe((res: any) => {
       this.newPeoples = res;
     }, (error: any) => {
