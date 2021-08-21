@@ -37,9 +37,25 @@
     <div class="top-area">
         <div class="top-search">
             <form method="post" class="">
-                <input type="text" placeholder="Search Friend">
+                <input type="text" id="searchText" name="searchText" [(ngModel)]="searchText" (input)="filter()"
+                 placeholder="Search Friend">
                 <button data-ripple><i class="ti-search"></i></button>
             </form>
+        </div>
+        <div class="filter-user" style="width:300px;" [ngClass]="{'show':isShow,'hide':!isShow}">
+            <div class="float-left body" *ngFor="let item of filterUser">
+                <a class="cursor-pointer" (click)="openProfile(item)">
+                    <div class="float-left" style="width:50px;">
+                        <img style="border-radius:50%;" src="{{item.img}}"
+                         width="40px" height="50px" />
+                    </div>
+                    <div class="float-left">
+                        <div class="filter-username">
+                            {{item.firstName + ' ' + item.lastName}}
+                        </div>
+                    </div>
+                </a>
+            </div> 
         </div>
         <ul class="setting-area" *ngIf="isOnlineOffline()">
             <li><a href="#" title="Home" data-ripple=""><i class="ti-home"></i></a></li>
