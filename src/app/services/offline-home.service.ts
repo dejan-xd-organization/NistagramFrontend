@@ -60,6 +60,13 @@ export class OfflineHomeService {
       }))
   }
 
+  findUser(text: any) {
+    return this.client.get(this.link + 'FilterUser?filter=' + text, this.header())
+      .pipe(map((res: any) => {
+        return this.parser(res);
+      }))
+  }
+
   sendFolower(user: any) {
   }
 

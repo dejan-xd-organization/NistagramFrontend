@@ -3,6 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HeadersComponent } from './headers.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
+import { FormsModule } from '@angular/forms';
+
 describe('HeadersComponent', () => {
   let component: HeadersComponent;
   let fixture: ComponentFixture<HeadersComponent>;
@@ -11,7 +13,8 @@ describe('HeadersComponent', () => {
     await TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        FormsModule
       ],
       declarations: [HeadersComponent]
     })

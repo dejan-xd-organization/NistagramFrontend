@@ -3,6 +3,8 @@ import { OfflineHomeService } from 'src/app/services/offline-home.service';
 import { Global } from 'src/app/global/global';
 import { OnlineHomeService } from 'src/app/services/online-home.service';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-headers',
   templateUrl: './headers.component.html',
@@ -13,7 +15,11 @@ export class HeadersComponent implements OnInit {
   user: any;
   messages: any = null;
   notifications: any = null;
-  constructor(private offline: OfflineHomeService, private global: Global, private online: OnlineHomeService) {
+  isShow: boolean = false;
+  searchText: any = null;
+  filterUser: any = [];
+  constructor(private offline: OfflineHomeService, private global: Global,
+    private online: OnlineHomeService, private router: Router) {
     this.user = localStorage.getItem('user');
   }
 
@@ -38,5 +44,25 @@ export class HeadersComponent implements OnInit {
 
   logout() {
     this.offline.logout();
+  }
+
+  filter() {
+    if (this.searchText.length > 2) {
+      this.offline.findUser(this.searchText).subscribe((res: any) => {
+        this.filterUser = res;
+        if (this.filterUser.length > 0) this.isShow = true;
+        else this.isShow = false;
+      })
+    }
+    else {
+      this.isShow = false;
+    }
+  }
+
+  openProfile(user: any) {
+    this.searchText = null;
+    this.isShow = false;
+    this.filterUser = [];
+    this.router.navigate(['/' + user.username])
   }
 }
