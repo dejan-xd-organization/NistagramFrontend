@@ -6,41 +6,30 @@ import { Injectable } from '@angular/core';
 export class OnlineHomeService {
 
   allPosts: any = [];
+  testList: any = [];
   constructor() {
+    this.testList = [
+      {
+        id: 1,
+        user: {
+          id: 1,
+          firstName: "Dejan",
+          lastName: "Jovanović",
+          username: "dejan",
+          img: "../../../../assets/images/resources/user-avatar.jpg"
+        },
+        text: "Pozdrav",
+        datetime: "1 min ago"
+      }
+    ];
   }
 
   getMessage() {
-    return [
-      {
-        id: 1,
-        user: {
-          id: 1,
-          firstName: "Dejan",
-          lastName: "Jovanović",
-          username: "dejan",
-          img: "../../../../assets/images/resources/user-avatar.jpg"
-        },
-        text: "Pozdrav",
-        datetime: "1 min ago"
-      }
-    ];
+    return this.testList;
   }
 
   getNotification() {
-    return [
-      {
-        id: 1,
-        user: {
-          id: 1,
-          firstName: "Dejan",
-          lastName: "Jovanović",
-          username: "dejan",
-          img: "../../../../assets/images/resources/user-avatar.jpg"
-        },
-        text: "Pozdrav",
-        datetime: "1 min ago"
-      }
-    ];
+    return this.testList;
   }
 
   getFollowers() {

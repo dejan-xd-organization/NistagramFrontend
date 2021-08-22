@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class OfflineHomeService {
 
-  link: string = 'http://localhost:57793/';
+  link: string = 'http://localhost:5000/';
   img: string = '../../../../assets/images/resources/user-avatar-default.png';
   constructor(private client: HttpClient) { }
 
