@@ -17,7 +17,7 @@ export class OfflineHomeService {
     return this.client.post(this.link + 'Login', credentials, this.header())
       .pipe(map((res: any) => {
         let response = JSON.parse(res);
-        if (response.status === 'SUCCESS=succes') {
+        if (response.status === 'SUCCESS') {
           let user = response.userDTO;
           if (user.img === null) user.img = this.img;
           localStorage.setItem('user', JSON.stringify(user));
