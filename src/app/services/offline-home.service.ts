@@ -47,9 +47,11 @@ export class OfflineHomeService {
   }
 
   getWallPosts() {
-    return this.client.get(this.link + 'GetAllPosts', this.header())
+    return this.client.get(this.link + 'GetAllOfflineWallPosts', this.header())
       .pipe(map((res: any) => {
-        return res;
+        let response = this.parserImagePost(JSON.parse(res));
+        console.log(response);
+        return response;
       }))
   }
 
@@ -90,5 +92,23 @@ export class OfflineHomeService {
       response.push(element);
     });
     return response;
+  }
+
+  parserImagePost(res: any) {
+    let response: any = [];
+    res.forEach((element: any) => {
+      if (element.imagePost === null) element['img'] = this.img;
+      else element['img'] = element.imagePost;
+
+      element.user = this.parserUser(element.user);
+
+      response.push(element);
+    });
+    return response;
+  }
+
+  parserUser(user: any) {
+    if (user.img === null) user.img = this.img;
+    return user;
   }
 }

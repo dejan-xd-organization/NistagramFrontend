@@ -36,6 +36,15 @@ export class HomeOnlineComponent implements OnInit {
     this.user = this.global.getUserInLocalstorage();
     this.getFollowers();
     this.getUserInformations();
+    this.getWallPosts();
+  }
+
+  getWallPosts() {
+    this.offline.getWallPosts().subscribe((res: any) => {
+      this.allPosts = res;
+    }, (error: any) => {
+      this.allPosts = [];
+    })
   }
 
   makeNewPost() {

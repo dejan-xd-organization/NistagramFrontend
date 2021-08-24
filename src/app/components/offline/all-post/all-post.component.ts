@@ -14,6 +14,7 @@ export class AllPostComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.post);
     this.user = JSON.stringify(localStorage.getItem('user'));
   }
 

@@ -75,25 +75,7 @@
                                             <div class="attachments">
                                                 <ul>
                                                     <li>
-                                                        <i class="fa fa-music"></i>
-                                                        <label class="fileContainer">
-                                                            <input type="file">
-                                                        </label>
-                                                    </li>
-                                                    <li>
                                                         <i class="fa fa-image"></i>
-                                                        <label class="fileContainer">
-                                                            <input type="file">
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <i class="fa fa-video-camera"></i>
-                                                        <label class="fileContainer">
-                                                            <input type="file">
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <i class="fa fa-camera"></i>
                                                         <label class="fileContainer">
                                                             <input type="file">
                                                         </label>
@@ -130,13 +112,13 @@
                                                         <li>
                                                             <span class="like" data-toggle="tooltip" title="like">
                                                                 <i class="ti-heart"></i>
-                                                                <ins>{{item.likeCount}}</ins>
+                                                                <ins>{{item.like}}</ins>
                                                             </span>
                                                         </li>
                                                         <li>
                                                             <span class="dislike" data-toggle="tooltip" title="dislike">
                                                                 <i class="ti-heart-broken"></i>
-                                                                <ins>{{item.dislikeCount}}</ins>
+                                                                <ins>{{item.dislike}}</ins>
                                                             </span>
                                                         </li>
                                                     </ul>
@@ -146,7 +128,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="coment-area">
+                                        <!--<div class="coment-area">
                                             <ul class="we-comet" *ngIf="item.comments.length > 0">
                                                 <li *ngFor="let comment of item.comments">
                                                     <div class="comet-avatar">
@@ -177,7 +159,7 @@
                                                     </div>
                                                 </li>
                                             </ul>                                         
-                                        </div>
+                                        </div>-->
                                     </div>
                                 </div>
                             </div>
