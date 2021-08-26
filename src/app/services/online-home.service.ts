@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -6,10 +9,12 @@ import { Injectable } from '@angular/core';
 export class OnlineHomeService {
 
   link: string = 'http://localhost:57793/';
+  link1: string = 'http://localhost:6709/';
+  img: string = '../../../../assets/images/resources/user-avatar-default.png';
 
   allPosts: any = [];
   testList: any = [];
-  constructor() {
+  constructor(private client: HttpClient) {
     this.testList = [
       {
         id: 1,
@@ -34,16 +39,12 @@ export class OnlineHomeService {
     return this.testList;
   }
 
-  getFollowers() {
-    return [
-      {
-        id: 1,
-        firstName: "Novica",
-        lastName: "Nikolić",
-        username: "nole",
-        img: "../../../../assets/images/resources/user-avatar2.jpg"
-      }
-    ]
+  getFollowings(id: any, page: any) {
+    return this.client.get(this.link1 + 'GetAllFollowers?id=' + id + '&page=' + page)
+      .pipe(map((res: any) => {
+        let response = this.parser(res);
+        return response;
+      }))
   }
 
   saveNewPost(post: any) {
@@ -82,5 +83,14 @@ export class OnlineHomeService {
       followersCounter: 100,
       followingCounter: 50
     }
+  }
+
+  parser(res: any) {
+    let response: any = [];
+    res.forEach((element: any) => {
+      if (element.img === null) element.img = this.img;
+      response.push(element);
+    });
+    return response;
   }
 }

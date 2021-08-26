@@ -11,10 +11,10 @@
                                 <div class="widget">
                                     <h4 class="widget-title">Shortcuts</h4>
                                     <ul class="naves">
-                                        <li>
+                                        <!--<li>
                                             <i class="ti-clipboard"></i>
                                             <a class="cursor-pointer" [routerLink]="['/new-post']">New post</a>
-                                        </li>
+                                        </li>-->
                                         <li>
                                             <i class="ti-comments-smiley"></i>
                                             <a class="cursor-pointer" [routerLink]="['/messages']">Messages</a>
@@ -28,13 +28,17 @@
                                             <a class="cursor-pointer" [routerLink]="['/followers']">Followers</a>
                                         </li>
                                         <li>
+                                            <i class="ti-user"></i>
+                                            <a class="cursor-pointer" [routerLink]="['/followers']">Following</a>
+                                        </li>
+                                        <li>
                                             <i class="ti-image"></i>
                                             <a class="cursor-pointer" [routerLink]="['/images']">Images</a>
                                         </li>
-                                        <li>
+                                        <!--<li>
                                             <i class="ti-bell"></i>
                                             <a class="cursor-pointer" [routerLink]="['/notifications']">Notifications</a>
-                                        </li>
+                                        </li>-->
                                         <li>
                                             <i class="ti-power-off"></i>
                                             <a class="cursor-pointer" (click)="logout()">Logout</a>
@@ -179,9 +183,9 @@
                                             <span><i class="ti-comment"></i><a class="cursor-pointer"
                                                     [routerLink]="['/messages']">Messages
                                                     <em>{{messagesCount}}</em></a></span>
-                                            <span><i class="ti-bell"></i><a class="cursor-pointer"
+                                            <!--<span><i class="ti-bell"></i><a class="cursor-pointer"
                                                     [routerLink]="['/notifications']">Notifications
-                                                    <em>{{notificationsCount}}</em></a></span>
+                                                    <em>{{notificationsCount}}</em></a></span>-->
                                         </div>
                                         <div class="page-likes">
                                             <ul class="nav nav-tabs likes-btn">
@@ -193,10 +197,10 @@
                                             <!-- Tab panes -->
                                             <div class="tab-content">
                                                 <div class="tab-pane active fade show " id="link1">
-                                                    <span><i class="ti-heart"></i>{{followersCount}}</span>
+                                                    <span><i class="ti-heart"></i>{{user.followers}}</span>
                                                 </div>
                                                 <div class="tab-pane fade" id="link2">
-                                                    <span><i class="ti-eye"></i>{{followingCount}}</span>
+                                                    <span><i class="ti-eye"></i>{{user.followings}}</span>
                                                 </div>
                                             </div>
                                         </div>

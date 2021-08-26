@@ -81,7 +81,9 @@ export class HomeOnlineComponent implements OnInit {
   }
 
   getFollowers() {
-    this.followers = this.online.getFollowers();
+    this.online.getFollowings(this.user.id, 1).subscribe((res: any) => {
+      this.followers = res;
+    });
   }
 
   logout() {
