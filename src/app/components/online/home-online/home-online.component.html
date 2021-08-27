@@ -28,7 +28,9 @@
                                             <a class="cursor-pointer" [routerLink]="['/followers']">Followers</a>
                                         </li>
                                         <li>
-                                            <i class="ti-user"></i>
+                                            <!--<i class="ti-user"></i>
+                                            <em> issue-->
+                                            <em class="ti-user"></em>
                                             <a class="cursor-pointer" [routerLink]="['/followers']">Following</a>
                                         </li>
                                         <li>
@@ -199,10 +201,14 @@
                                             <!-- Tab panes -->
                                             <div class="tab-content">
                                                 <div class="tab-pane active fade show " id="link1">
-                                                    <span><i class="ti-heart"></i>{{user.followers}}</span>
+                                                    <!--<span><i class="ti-heart"></i>{{user.followers}}</span>
+                                                    <em> issue-->
+                                                    <span><em class="ti-heart"></em>{{user.followers}}</span>
                                                 </div>
                                                 <div class="tab-pane fade" id="link2">
-                                                    <span><i class="ti-eye"></i>{{user.followings}}</span>
+                                                    <!--<span><i class="ti-eye"></i>{{user.followings}}</span>
+                                                    <em> issue-->
+                                                    <span><em class="ti-eye"></em>{{user.followings}}</span>
                                                 </div>
                                             </div>
                                         </div>
