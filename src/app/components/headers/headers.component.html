@@ -30,13 +30,13 @@
 </div><!-- responsive header -->
 
 <div class="topbar stick">
-    <div class="logo">
-        <a class="cursor-pointer" [routerLink]="['/']"><img src="../assets/images/logo.png" alt=""></a>
+    <div class="logo" style="width:145px;">
+        <a class="cursor-pointer" [routerLink]="['/']"><img src="../assets/images/nistagram-logo.png" alt=""></a>
     </div>
 
     <div class="top-area">
-        <div class="top-search">
-            <form method="post" class="">
+        <div class="top-search" style="margin-left:50px;">
+            <form method="post">
                 <input type="text" id="searchText" name="searchText" [(ngModel)]="searchText" (input)="filter()"
                  placeholder="Search Friend">
                 <button data-ripple><i class="ti-search"></i></button>

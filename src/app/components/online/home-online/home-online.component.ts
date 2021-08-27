@@ -42,7 +42,6 @@ export class HomeOnlineComponent implements OnInit {
   getWallPosts() {
     this.online.getWallPosts().subscribe((res: any) => {
       this.allPosts = res;
-      console.log(this.allPosts);
     }, (error: any) => {
       this.allPosts = [];
     })
@@ -71,10 +70,11 @@ export class HomeOnlineComponent implements OnInit {
   makeNewPost() {
     this.newPost.userId = this.user.id
     this.online.saveNewPost(this.newPost).subscribe((res: any) => {
-      res['user'] = this.user
+      console.log(res);
+      res['user'] = this.user;
       res['like'] = 0;
       res['dislike'] = 0;
-      this.allPosts.unshift(res)
+      this.allPosts.unshift(res);
       this.newPost = {
         userId: null,
         description: null

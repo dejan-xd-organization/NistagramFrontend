@@ -8,9 +8,12 @@
                 <div class="friend-name">
                     <ins><a class="cursor-pointer" [routerLink]="['/' + post.user.username]"
                             title="">{{post.user.firstName + ' ' + post.user.lastName}}</a></ins>
-                    <span>published: {{post.timePublis}}</span>
+                    <span>Published: {{post.timePublis | date : 'dd. MMM yyyy HH:mm'}}</span>
                 </div>
                 <div class="post-meta">
+                    <div class="description">
+                        <p>{{post.postDescription}}</p>
+                    </div>
                     <img *ngIf="post.imagePost !== null" src="{{post.imagePost}}" alt="">
                     <div class="we-video-info">
                         <ul>
@@ -27,9 +30,6 @@
                                 </span>
                             </li>
                         </ul>
-                    </div>
-                    <div class="description">
-                        <p>{{post.descriptionPost}}</p>
                     </div>
                 </div>
             </div>

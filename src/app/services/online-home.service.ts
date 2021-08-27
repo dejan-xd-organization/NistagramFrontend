@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class OnlineHomeService {
 
   link: string = 'http://localhost:57793/';
-  link1: string = 'http://localhost:6709/';
+  //link1: string = 'http://localhost:6709/';
   img: string = '../../../../assets/images/resources/user-avatar-default.png';
 
   allPosts: any = [];
@@ -40,7 +40,7 @@ export class OnlineHomeService {
   }
 
   getFollowings(id: any, page: any) {
-    return this.client.get(this.link1 + 'GetAllFollowers?id=' + id + '&page=' + page)
+    return this.client.get(this.link + 'GetAllFollowers?id=' + id + '&page=' + page)
       .pipe(map((res: any) => {
         let response = this.parser(res);
         return response;
@@ -48,7 +48,7 @@ export class OnlineHomeService {
   }
 
   saveNewPost(post: any) {
-    return this.client.post(this.link1 + 'NewPost', post)
+    return this.client.post(this.link + 'NewPost', post)
       .pipe(map((res: any) => {
         return res;
       }))
