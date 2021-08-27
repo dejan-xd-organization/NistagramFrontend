@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OnlineHomeService {
 
+  link: string = 'http://localhost:57793/';
+  //link1: string = 'http://localhost:6709/';
+  img: string = '../../../../assets/images/resources/user-avatar-default.png';
+
   allPosts: any = [];
   testList: any = [];
-  constructor() {
+  constructor(private client: HttpClient) {
     this.testList = [
       {
         id: 1,
@@ -32,39 +39,34 @@ export class OnlineHomeService {
     return this.testList;
   }
 
-  getFollowers() {
-    return [
-      {
-        id: 1,
-        firstName: "Novica",
-        lastName: "Nikolić",
-        username: "nole",
-        img: "../../../../assets/images/resources/user-avatar2.jpg"
-      }
-    ]
+  getFollowings(id: any, page: any) {
+    return this.client.get(this.link + 'GetAllFollowers?id=' + id + '&page=' + page)
+      .pipe(map((res: any) => {
+        let response = this.parser(res);
+        return response;
+      }))
   }
 
   saveNewPost(post: any) {
-    post["id"] = this.allPosts.length + 1;
-    post["datetime"] = Date.now();
-    post["likeCount"] = 10;
-    post["dislikeCount"] = 1;
-    post["comments"] = []
-    post.comments = [
-      {
-        id: 1,
-        user: {
-          id: 1,
-          firstName: "Novica",
-          lastName: "Nikolić",
-          username: "nole",
-          img: "../../../../assets/images/resources/user-avatar2.jpg"
-        },
-        dateCreated: Date.now(),
-        text: "Neki tekst"
-      }
-    ]
-    return post
+    return this.client.post(this.link + 'NewPost', post)
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
+
+  getWallPosts() {
+    return this.client.get(this.link + 'GetAllOnlineWallPosts')
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
+
+  like(id: any, userId: any) {
+    return this.client.put(this.link + 'Like', { id: id, userId: userId });
+  }
+
+  dislike(id: any, userId: any) {
+    return this.client.put(this.link + 'Dislike', { id: id, userId: userId });
   }
 
   saveNewComment(data: any) {
@@ -81,4 +83,32 @@ export class OnlineHomeService {
       followingCounter: 50
     }
   }
+
+  parser(res: any) {
+    let response: any = [];
+    res.forEach((element: any) => {
+      if (element.img === null) element.img = this.img;
+      response.push(element);
+    });
+    return response;
+  }
+
+  parserImagePost(res: any) {
+    let response: any = [];
+    res.forEach((element: any) => {
+      if (element.imagePost === null) element['img'] = this.img;
+      else element['img'] = element.imagePost;
+
+      element.user = this.parserUser(element.user);
+
+      response.push(element);
+    });
+    return response;
+  }
+
+  parserUser(user: any) {
+    if (user.img === null) user.img = this.img;
+    return user;
+  }
+
 }
