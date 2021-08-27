@@ -48,26 +48,25 @@ export class OnlineHomeService {
   }
 
   saveNewPost(post: any) {
-    post["id"] = this.allPosts.length + 1;
-    post["datetime"] = Date.now();
-    post["likeCount"] = 10;
-    post["dislikeCount"] = 1;
-    post["comments"] = []
-    post.comments = [
-      {
-        id: 1,
-        user: {
-          id: 1,
-          firstName: "Novica",
-          lastName: "Nikolić",
-          username: "nole",
-          img: "../../../../assets/images/resources/user-avatar2.jpg"
-        },
-        dateCreated: Date.now(),
-        text: "Neki tekst"
-      }
-    ]
-    return post
+    return this.client.post(this.link1 + 'NewPost', post)
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
+
+  getWallPosts() {
+    return this.client.get(this.link + 'GetAllOnlineWallPosts')
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
+
+  like(id: any, userId: any) {
+    return this.client.put(this.link + 'Like', { id: id, userId: userId });
+  }
+
+  dislike(id: any, userId: any) {
+    return this.client.put(this.link + 'Dislike', { id: id, userId: userId });
   }
 
   saveNewComment(data: any) {
@@ -93,4 +92,23 @@ export class OnlineHomeService {
     });
     return response;
   }
+
+  parserImagePost(res: any) {
+    let response: any = [];
+    res.forEach((element: any) => {
+      if (element.imagePost === null) element['img'] = this.img;
+      else element['img'] = element.imagePost;
+
+      element.user = this.parserUser(element.user);
+
+      response.push(element);
+    });
+    return response;
+  }
+
+  parserUser(user: any) {
+    if (user.img === null) user.img = this.img;
+    return user;
+  }
+
 }

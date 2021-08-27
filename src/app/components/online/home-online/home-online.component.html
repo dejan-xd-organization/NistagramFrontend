@@ -74,7 +74,7 @@
                                     </figure>
                                     <div class="newpst-input">
                                         <form method="post">
-                                            <textarea rows="2" [(ngModel)]="newPost.text" [ngModelOptions]="{standalone: true}"
+                                            <textarea rows="2" [(ngModel)]="newPost.description" [ngModelOptions]="{standalone: true}"
                                              placeholder="write something"></textarea>
                                             <div class="attachments">
                                                 <ul>
@@ -101,35 +101,37 @@
                                     <div class="user-post">
                                         <div class="friend-info">
                                             <figure>
-                                                <img src="{{item.user.img}}"
+                                                <img [src]="setImage(item.user.img)"
                                                     alt="">
                                             </figure>
                                             <div class="friend-name">
                                                 <ins><a class="cursor-pointer" [routerLink]="['/' + item.user.username]"
                                                         title="">{{item.user.firstName + " " + item.user.lastName}}</a></ins>
-                                                <span>Published: {{item.datetime | date : 'dd. MMM yyyy HH:mm'}}</span>
+                                                <span>Published: {{item.timePublis | date : 'dd. MMM yyyy HH:mm'}}</span>
                                             </div>
                                             <div class="post-meta">
-                                                <img src="{{item.user.img}}" alt="">
+                                                <div class="description">
+                                                    <p>{{item.postDescription}}</p>
+                                                </div>
+                                                <img [src]="item.imagePost" alt="">
                                                 <div class="we-video-info">
                                                     <ul>
-                                                        <li>
+                                                        <li style="cursor:pointer;" (click)="like(item)">
                                                             <span class="like" data-toggle="tooltip" title="like">
                                                                 <i class="ti-heart"></i>
                                                                 <ins>{{item.like}}</ins>
                                                             </span>
                                                         </li>
                                                         <li>
-                                                            <span class="dislike" data-toggle="tooltip" title="dislike">
+                                                            <span class="dislike" data-toggle="tooltip" 
+                                                            (click)="dislike(item)" title="dislike">
                                                                 <i class="ti-heart-broken"></i>
                                                                 <ins>{{item.dislike}}</ins>
                                                             </span>
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <div class="description">
-                                                    <p>{{item.text}}</p>
-                                                </div>
+
                                             </div>
                                         </div>
                                         <!--<div class="coment-area">

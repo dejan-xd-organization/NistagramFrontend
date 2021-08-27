@@ -50,7 +50,6 @@ export class OfflineHomeService {
     return this.client.get(this.link + 'GetAllOfflineWallPosts', this.header())
       .pipe(map((res: any) => {
         let response = this.parserImagePost(JSON.parse(res));
-        console.log(response);
         return response;
       }))
   }
