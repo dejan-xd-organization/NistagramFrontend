@@ -84,6 +84,14 @@ export class OnlineHomeService {
     }
   }
 
+  updateUser(user: any) {
+    return this.client.put(this.link + 'UpdateUser', user);
+  }
+
+  changePassword(id: any, oldPassword: any, newPassword: any) {
+    return this.client.put(this.link + 'ChangePassword', { id: id, oldPassword: oldPassword, newPassword: newPassword });
+  }
+
   parser(res: any) {
     let response: any = [];
     res.forEach((element: any) => {

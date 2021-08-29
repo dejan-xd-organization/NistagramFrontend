@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NotAuthGuard } from './guard/not-auth.guard';
+import { AuthGuard } from './guard/auth.guard';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -51,6 +52,7 @@ import { ImagesComponent } from './components/online/images/images.component';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
+    AuthGuard,
     NotAuthGuard,
     { provide: APP_BASE_HREF, useValue: '' }
   ],

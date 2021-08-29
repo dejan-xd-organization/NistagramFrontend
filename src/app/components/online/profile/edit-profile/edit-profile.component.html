@@ -1,1 +1,232 @@
-<p>edit-profile works!</p>
+<section *ngIf="user!==null">
+    <div class="gap gray-bg">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="row" id="page-contents">
+                        <div class="col-lg-3">
+                            <aside class="sidebar static">
+                                <div class="widget stick-widget">
+                                    <h4 class="widget-title">Info</h4>
+                                    <ul class="naves">
+                                        <li>
+                                            <i class="ti-info-alt"></i>
+                                            <a class="cursor-pointer" (click)="activeTab='basic'" title="">
+                                                <span [ngClass]="{'active-tab':activeTab==='basic'}"> Basic info </span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <i class="ti-lock"></i>
+                                            <a class="cursor-pointer" (click)="activeTab='changePassword'" title="">
+                                                <span [ngClass]="{'active-tab':activeTab==='changePassword'}"> change
+                                                    password</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div><!-- settings widget -->
+                            </aside>
+                        </div><!-- sidebar -->
+                        <div class="col-lg-6" *ngIf="activeTab==='basic'">
+                            <div class="central-meta">
+                                <div class="editing-info">
+                                    <h5 class="f-title"><i class="ti-info-alt"></i> Edit Basic Information</h5>
+                                    <form method="post">
+                                        <div class="form-group half">
+                                            <input type="text" id="firstName" name="firstName"
+                                                [(ngModel)]="user.firstName" required="required" />
+                                            <label class="control-label" for="input">First Name</label><i
+                                                class="mtrl-select"></i>
+                                        </div>
+                                        <div class="form-group half">
+                                            <input type="text" id="lastName" name="lastName" [(ngModel)]="user.lastName"
+                                                required="required" />
+                                            <label class="control-label" for="input">Last Name</label><i
+                                                class="mtrl-select"></i>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" id="username" name="username" [(ngModel)]="user.username"
+                                                required="required" />
+                                            <label class="control-label" for="input">Username</label><i
+                                                class="mtrl-select"></i>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" id="email" name="email" [(ngModel)]="user.email"
+                                                required="required" />
+                                            <label class="control-label" for="input">Email</label><i
+                                                class="mtrl-select"></i>
+                                        </div>
+                                        <div class="dob">
+                                            <div class="form-group">
+                                                <input type="date" id="dateOfBirth" name="dateOfBirth"
+                                                    [(ngModel)]="user.dateOfBirth" value="user.dateOfBirth"
+                                                    required="required" />
+                                                <label class="control-label" for="input">Date of Birth</label><i
+                                                    class="mtrl-select"></i>
+                                            </div>
+                                        </div>
+                                        <div class="form-radio">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" id="sex" name="sex" [(ngModel)]="user.sex"
+                                                        [checked]="user.sex==='m'" value="m"><i
+                                                        class="check-box"></i>Male
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" id="sex" name="sex" [(ngModel)]="user.sex"
+                                                        [checked]="user.sex==='f'" value="f"><i
+                                                        class="check-box"></i>Female
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" id="city" name="city" [(ngModel)]="user.address.city"
+                                                required="required" />
+                                            <label class="control-label" for="input">City</label><i
+                                                class="mtrl-select"></i>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" id="country" name="country"
+                                                [(ngModel)]="user.address.country" required="required" />
+                                            <label class="control-label" for="input">Country</label><i
+                                                class="mtrl-select"></i>
+                                        </div>
+                                        <div class="form-radio">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" id="relationship" name="relationship"
+                                                        [(ngModel)]="user.relationship"
+                                                        [checked]="user.relationship==='yes'" value="yes"><i
+                                                        class="check-box"></i>Single
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" id="relationship" name="relationship"
+                                                        [(ngModel)]="user.relationship"
+                                                        [checked]="user.relationship==='no'" value="no"><i
+                                                        class="check-box"></i>In
+                                                    relationship
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="form-radio">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" id="isPublicProfile" name="isPublicProfile"
+                                                        [(ngModel)]="user.isPublicProfile"
+                                                        [checked]="user.isPublicProfile" [value]="true"><i
+                                                        class="check-box"></i>Public profile
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" id="isPublicProfile" name="isPublicProfile"
+                                                        [(ngModel)]="user.isPublicProfile"
+                                                        [checked]="user.isPublicProfile" [value]="false"><i
+                                                        class="check-box"></i>
+                                                    Private profile
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="submit-btns">
+                                            <button type="button" class="mtr-btn" (click)="updateProfile()">
+                                                <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+                                                <span style="color: white;">Update</span>
+                                            </button>
+                                            <button type="button" class="mtr-btn" style="margin-left: 10px;"
+                                                (click)="cancel()"><span>Cancel</span></button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div><!-- centerl meta -->
+
+                        <div class="col-lg-6" *ngIf="activeTab==='changePassword'">
+                            <div class="central-meta">
+                                <div class="editing-info">
+                                    <h5 class="f-title"><i class="ti-lock"></i>Change Password</h5>
+
+                                    <form method="post">
+                                        <div class="form-group">
+                                            <input type="password" id="newPassword" name="newPassword"
+                                                [(ngModel)]="newPassword" required="required">
+                                            <label class="control-label" for="input">New password</label><i
+                                                class="mtrl-select"></i>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" id="confirmPassword" name="confirmPassword"
+                                                [(ngModel)]="confirmPassword" required="required">
+                                            <label class="control-label" for="input">Confirm password</label><i
+                                                class="mtrl-select"></i>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" id="oldPassword" name="oldPassword"
+                                                [(ngModel)]="oldPassword" required="required">
+                                            <label class="control-label" for="input">Current password</label><i
+                                                class="mtrl-select"></i>
+                                        </div>
+                                        <div class="submit-btns">
+                                            <button type="button" class="mtr-btn" (click)="changePassword()">
+                                                <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+                                                <span style="color: white;">Update</span>
+                                            </button>
+                                            <button type="button" class="mtr-btn" style="margin-left: 10px;"
+                                                (click)="cancel()">
+                                                <span>Cancel</span>
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3">
+                            <aside class="sidebar static right" *ngIf="user != null">
+                                <div class="widget stick-widget">
+                                    <h4 class="widget-title">Your page</h4>
+                                    <div class="your-page">
+                                        <figure>
+                                            <a [routerLink]="['/' + user.username]"><img src="{{user.img}}" alt=""></a>
+                                        </figure>
+                                        <div class="page-meta">
+                                            <a [routerLink]="['/' + user.username]">{{user.firstName}}</a>
+                                            <span><i class="ti-comment"></i><a class="cursor-pointer"
+                                                    [routerLink]="['/messages']">Messages
+                                                    <em>{{messagesCount}}</em></a></span>
+                                            <!--<span><i class="ti-bell"></i><a class="cursor-pointer"
+                                                    [routerLink]="['/notifications']">Notifications
+                                                    <em>{{notificationsCount}}</em></a></span>-->
+                                        </div>
+                                        <div class="page-likes">
+                                            <ul class="nav nav-tabs likes-btn">
+                                                <li class="nav-item"><a class="active" href="#link1"
+                                                        data-toggle="tab">followers</a></li>
+                                                <li class="nav-item"><a class="" href="#link2"
+                                                        data-toggle="tab">following</a></li>
+                                            </ul>
+                                            <!-- Tab panes -->
+                                            <div class="tab-content">
+                                                <div class="tab-pane active fade show " id="link1">
+                                                    <!--<span><i class="ti-heart"></i>{{user.followers}}</span>
+                                                    <em> issue-->
+                                                    <span><em class="ti-heart"></em>{{user.followers}}</span>
+                                                </div>
+                                                <div class="tab-pane fade" id="link2">
+                                                    <!--<span><i class="ti-eye"></i>{{user.followings}}</span>
+                                                    <em> issue-->
+                                                    <span><em class="ti-eye"></em>{{user.followings}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- page like widget -->
+                            </aside>
+                        </div><!-- sidebar -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
