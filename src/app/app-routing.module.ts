@@ -1,7 +1,8 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { NotAuthGuard } from './guard/not-auth.guard';
+import { AuthGuard } from './guard/auth.guard';
 
 import { LoginComponent } from './components/offline/login/login.component';
 import { RegistrationComponent } from './components/offline/registration/registration.component';
@@ -19,20 +20,19 @@ const routes: Routes = [
   { path: '', component: OfficialHomeComponent },
   { path: 'login', component: LoginComponent, canActivate: [NotAuthGuard] },
   { path: 'registration', component: RegistrationComponent, canActivate: [NotAuthGuard] },
-  { path: 'notifications', component: NotificationsComponent },
-  { path: 'notifications/:id', component: NotificationsComponent },
-  { path: 'messages', component: MessagesComponent },
-  { path: 'messages/:id', component: MessagesComponent },
+  // { path: 'notifications', component: NotificationsComponent },
+  // { path: 'notifications/:id', component: NotificationsComponent },
+  // { path: 'messages', component: MessagesComponent },
+  // { path: 'messages/:id', component: MessagesComponent },
   { path: 'new-post', component: NewPostComponent },
   { path: 'followers', component: FollowersComponent },
   { path: 'images', component: ImagesComponent },
-  { path: ':username', component: ViewProfileComponent },
-  { path: ':username/edit', component: EditProfileComponent },
-
+  { path: 'edit', component: EditProfileComponent },
+  { path: ':username', component: ViewProfileComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
