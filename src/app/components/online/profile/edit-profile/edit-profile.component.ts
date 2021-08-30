@@ -31,10 +31,11 @@ export class EditProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.online.reloadPage();
     this.user = this.global.getUserInLocalstorage();
+    this.defaultInfo();
     let split = this.user.dateOfBirth.split('T');
     this.user.dateOfBirth = split[0];
-    console.log(this.user)
   }
 
   getUserInformations() {
@@ -43,6 +44,16 @@ export class EditProfileComponent implements OnInit {
     this.notificationsCount = counter.notificationCounter;
     this.followersCount = counter.followersCounter;
     this.followingCount = counter.followingCounter;
+  }
+
+  defaultInfo() {
+    if (this.user.dateOfBirth === null) this.user.dateOfBirth = '2000-01-01';
+    if (this.user.address === null) {
+      this.user.address = {
+        city: 'Not provided',
+        country: 'Not provided'
+      }
+    }
   }
 
   updateProfile() {

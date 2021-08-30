@@ -15,24 +15,45 @@ export class RegistrationComponent implements OnInit {
   email: any = null;
   username: any = null;
   password: any = null;
+  isLoading: boolean = false;
   constructor(private offline: OfflineHomeService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   registration() {
-    let registrationObject = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      email: this.email,
-      username: this.username,
-      password: this.password
-    }
+    this.isLoading = true;
+    if (this.firstName !== null || this.lastName !== null || this.email !== null || this.username !== null || this.password !== null) {
+      let registrationObject = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email,
+        username: this.username,
+        password: this.password
+      }
 
-    this.offline.registration(registrationObject).subscribe((res: any) => {
-      if (!res) alert("Provided data is not valid. Please fill again.")
-      else this.router.navigate(['/login'])
-    });
+      this.offline.registration(registrationObject).subscribe((res: any) => {
+        if (!res) {
+          alert("Provided data is not valid. Please fill again.")
+          this.isLoading = false;
+        }
+        else {
+          this.router.navigate(['/login'])
+        }
+      });
+    }
+    else {
+      alert("Input fileds can't be empty.")
+      this.isLoading = false;
+    }
+  }
+
+  cancel() {
+    this.firstName = null;
+    this.lastName = null;
+    this.email = null;
+    this.username = null;
+    this.password = null;
   }
 
 }
