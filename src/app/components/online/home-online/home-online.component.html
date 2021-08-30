@@ -4,10 +4,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row merged20" id="page-contents">
-
                         <div class="col-lg-3">
                             <aside class="sidebar static left" *ngIf="user != null">
-
                                 <div class="widget">
                                     <h4 class="widget-title">Shortcuts</h4>
                                     <ul class="naves">
@@ -20,23 +18,17 @@
                                             <a class="cursor-pointer" [routerLink]="['/messages']">Messages</a>
                                         </li>
                                         <li>
-                                            <i class="ti-files"></i>
+                                            <i class="ti-user"></i>
                                             <a class="cursor-pointer" [routerLink]="['/' + user.username]">Profile</a>
                                         </li>
-                                        <li>
-                                            <i class="ti-user"></i>
-                                            <a class="cursor-pointer" [routerLink]="['/followers']">Followers</a>
-                                        </li>
-                                        <li>
-                                            <!--<i class="ti-user"></i>
-                                            <em> issue-->
-                                            <i class="ti-user"></i>
-                                            <a class="cursor-pointer" [routerLink]="['/followers']">Following</a>
+                                        <!-- <li>
+                                            <i class="ti-link"></i>
+                                            <a class="cursor-pointer" [routerLink]="['/' + user.username]">Friends</a>
                                         </li>
                                         <li>
                                             <i class="ti-image"></i>
                                             <a class="cursor-pointer" [routerLink]="['/images']">Images</a>
-                                        </li>
+                                        </li> -->
                                         <!--<li>
                                             <i class="ti-bell"></i>
                                             <a class="cursor-pointer" [routerLink]="['/notifications']">Notifications</a>
@@ -48,8 +40,8 @@
                                     </ul>
                                 </div><!-- Shortcuts -->
 
-                                <div class="widget stick-widget">
-                                    <h4 class="widget-title">New follownig</h4>
+                                <div class="widget">
+                                    <h4 class="widget-title">New Followers</h4>
                                     <ul *ngIf="followers != null" class="followers">
                                         <li *ngFor="let item of followers">
                                             <figure><img src="{{item.img}}" width="50px" height="50px" alt="">
@@ -63,6 +55,20 @@
                                     </ul>
                                 </div><!-- who's following -->
 
+                                <div class="widget">
+                                    <h4 class="widget-title">New Follownig</h4>
+                                    <ul *ngIf="following != null" class="followers">
+                                        <li *ngFor="let item of following">
+                                            <figure><img src="{{item.img}}" width="50px" height="50px" alt="">
+                                            </figure>
+                                            <div class="friend-meta">
+                                                <h4><a class="cursor-pointer" [routerLink]="['/' + item.username]">
+                                                        {{item.firstName + ' ' + item.lastName}}</a></h4>
+                                                <a class="cursor-pointer" class="underline">{{item.email}}</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div><!-- who's following -->
                             </aside>
                         </div><!-- sidebar -->
 
@@ -81,13 +87,16 @@
                                             <div class="attachments">
                                                 <ul>
                                                     <li>
-                                                        <i class="fa fa-image"></i>
+                                                        <i class="fa fa-image" style="color: black;"></i>
                                                         <label class="fileContainer">
                                                             <input type="file">
                                                         </label>
                                                     </li>
                                                     <li>
-                                                        <button type="submit" (click)="makeNewPost()">Post</button>
+                                                        <button type="submit" (click)="makeNewPost()">
+                                                            <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+                                                            <span style="color: white;">Post</span>
+                                                        </button>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -201,14 +210,10 @@
                                             <!-- Tab panes -->
                                             <div class="tab-content">
                                                 <div class="tab-pane active fade show " id="link1">
-                                                    <!--<span><i class="ti-heart"></i>{{user.followers}}</span>
-                                                    <em> issue-->
-                                                    <span><em class="ti-heart"></em>{{user.followers}}</span>
+                                                    <span><i class="ti-heart"></i> {{user.followers}}</span>
                                                 </div>
                                                 <div class="tab-pane fade" id="link2">
-                                                    <!--<span><i class="ti-eye"></i>{{user.followings}}</span>
-                                                    <em> issue-->
-                                                    <span><em class="ti-eye"></em>{{user.followings}}</span>
+                                                    <span><i class="ti-eye"></i> {{user.followings}}</span>
                                                 </div>
                                             </div>
                                         </div>

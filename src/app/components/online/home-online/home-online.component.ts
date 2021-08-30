@@ -12,6 +12,7 @@ export class HomeOnlineComponent implements OnInit {
 
   user: any = null;
   followers: any = null;
+  following: any = null;
   newMedia: any = null;
   newPost: any;
   allPosts: any = [];
@@ -20,6 +21,7 @@ export class HomeOnlineComponent implements OnInit {
   notificationsCount: any = null;
   followersCount: any = null;
   followingCount: any = null;
+  isLoading: any = false;
   constructor(private global: Global, private online: OnlineHomeService, private offline: OfflineHomeService) {
     this.newPost = {
       userId: null,
@@ -33,8 +35,10 @@ export class HomeOnlineComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.online.reloadPage();
     this.user = this.global.getUserInLocalstorage();
-    this.getFollowers();
+    this.getNewFollowers();
+    this.getNewFollowings();
     this.getUserInformations();
     this.getWallPosts();
   }
@@ -68,9 +72,9 @@ export class HomeOnlineComponent implements OnInit {
   }
 
   makeNewPost() {
+    this.isLoading = true;
     this.newPost.userId = this.user.id
     this.online.saveNewPost(this.newPost).subscribe((res: any) => {
-      console.log(res);
       res['user'] = this.user;
       res['like'] = 0;
       res['dislike'] = 0;
@@ -79,9 +83,8 @@ export class HomeOnlineComponent implements OnInit {
         userId: null,
         description: null
       }
+      this.isLoading = false;
     })
-
-
   }
 
   makeNewComment(post: any) {
@@ -108,9 +111,15 @@ export class HomeOnlineComponent implements OnInit {
     this.followingCount = counter.followingCounter
   }
 
-  getFollowers() {
-    this.online.getFollowings(this.user.id, 1).subscribe((res: any) => {
+  getNewFollowers() {
+    this.online.getNewFollowers(this.user.id).subscribe((res: any) => {
       this.followers = res;
+    });
+  }
+
+  getNewFollowings() {
+    this.online.getNewFollowings(this.user.id).subscribe((res: any) => {
+      this.following = res;
     });
   }
 

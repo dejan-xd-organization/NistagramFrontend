@@ -39,12 +39,28 @@ export class OnlineHomeService {
     return this.testList;
   }
 
-  getFollowings(id: any, page: any) {
-    return this.client.get(this.link + 'GetAllFollowers?id=' + id + '&page=' + page)
+  getNewFollowers(id: any) {
+    return this.client.get(this.link + 'GetNewFollowers?id=' + id)
       .pipe(map((res: any) => {
         let response = this.parser(res);
         return response;
       }))
+  }
+
+  getNewFollowings(id: any) {
+    return this.client.get(this.link + 'GetNewFollowings?id=' + id)
+      .pipe(map((res: any) => {
+        let response = this.parser(res);
+        return response;
+      }))
+  }
+
+  getMyFollowers(id: any, page: any) {
+    return this.client.get(this.link + 'GetMyFollowers?id=' + id + '&page=' + page)
+  }
+
+  getMyFollowing(id: any, page: any) {
+    return this.client.get(this.link + 'getMyFollowing?id=' + id + '&page=' + page)
   }
 
   saveNewPost(post: any) {
@@ -56,6 +72,13 @@ export class OnlineHomeService {
 
   getWallPosts() {
     return this.client.get(this.link + 'GetAllOnlineWallPosts')
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
+
+  getMyWallPosts(id: any) {
+    return this.client.get(this.link + 'GetMyOnlineWallPosts?id=' + id)
       .pipe(map((res: any) => {
         return res;
       }))
@@ -117,6 +140,16 @@ export class OnlineHomeService {
   parserUser(user: any) {
     if (user.img === null) user.img = this.img;
     return user;
+  }
+
+  reloadPage() {
+    if (!localStorage.getItem('foo')) {
+      localStorage.setItem('foo', 'no reload')
+      location.reload()
+    } else {
+      localStorage.removeItem('foo')
+    }
+
   }
 
 }

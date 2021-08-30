@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ export class OfflineHomeService {
 
   link: string = 'http://localhost:57793/';
   img: string = '../../../../assets/images/resources/user-avatar-default.png';
-  constructor(private client: HttpClient) { }
+  constructor(private client: HttpClient, private router: Router) { }
 
   login(credentials: any) {
     return this.client.post(this.link + 'Login', credentials, this.header())
@@ -32,7 +33,8 @@ export class OfflineHomeService {
   logout() {
     localStorage.removeItem('JWT');
     localStorage.removeItem('user');
-    window.location.reload();
+    this.router.navigate(['/'])
+    //window.location.reload();
   }
 
   registration(user: any) {
