@@ -19,11 +19,11 @@
                                         </li>
                                         <li>
                                             <i class="ti-user"></i>
-                                            <a class="cursor-pointer" [routerLink]="['/' + user.username]">Profile</a>
+                                            <a class="cursor-pointer" [routerLink]="['/' + user.id]">Profile</a>
                                         </li>
                                         <!-- <li>
                                             <i class="ti-link"></i>
-                                            <a class="cursor-pointer" [routerLink]="['/' + user.username]">Friends</a>
+                                            <a class="cursor-pointer" [routerLink]="['/' + user.id]">Friends</a>
                                         </li>
                                         <li>
                                             <i class="ti-image"></i>
@@ -47,7 +47,7 @@
                                             <figure><img src="{{item.img}}" width="50px" height="50px" alt="">
                                             </figure>
                                             <div class="friend-meta">
-                                                <h4><a class="cursor-pointer" [routerLink]="['/' + item.username]">
+                                                <h4><a class="cursor-pointer" [routerLink]="['/' + item.id]">
                                                         {{item.firstName + ' ' + item.lastName}}</a></h4>
                                                 <a class="cursor-pointer" class="underline">{{item.email}}</a>
                                             </div>
@@ -62,7 +62,7 @@
                                             <figure><img src="{{item.img}}" width="50px" height="50px" alt="">
                                             </figure>
                                             <div class="friend-meta">
-                                                <h4><a class="cursor-pointer" [routerLink]="['/' + item.username]">
+                                                <h4><a class="cursor-pointer" [routerLink]="['/' + item.id]">
                                                         {{item.firstName + ' ' + item.lastName}}</a></h4>
                                                 <a class="cursor-pointer" class="underline">{{item.email}}</a>
                                             </div>
@@ -115,7 +115,7 @@
                                                 <img [src]="setImage(item.user.img)" alt="">
                                             </figure>
                                             <div class="friend-name">
-                                                <ins><a class="cursor-pointer" [routerLink]="['/' + item.user.username]"
+                                                <ins><a class="cursor-pointer" [routerLink]="['/' + item.user.id]"
                                                         title="">{{item.user.firstName + " " +
                                                         item.user.lastName}}</a></ins>
                                                 <span>Published: {{item.timePublis | date : 'dd. MMM yyyy
@@ -155,7 +155,7 @@
                                                     <div class="we-comment">
                                                         <div class="coment-head">
                                                             <h5><a class="cursor-pointer"
-                                                                    [routerLink]="['/' + comment.user.username]">{{comment.user.firstName
+                                                                    [routerLink]="['/' + comment.user.id]">{{comment.user.firstName
                                                                     + " " + comment.user.lastName}}</a></h5>
                                                             <span>{{comment.dateCreated | date : 'dd. MMM yyyy HH:mm'}}</span>
                                                         </div>
@@ -189,10 +189,10 @@
                                     <h4 class="widget-title">Your page</h4>
                                     <div class="your-page">
                                         <figure>
-                                            <a [routerLink]="['/' + user.username]"><img src="{{user.img}}" alt=""></a>
+                                            <a [routerLink]="['/' + user.id]"><img src="{{user.img}}" alt=""></a>
                                         </figure>
                                         <div class="page-meta">
-                                            <a [routerLink]="['/' + user.username]">{{user.firstName}}</a>
+                                            <a [routerLink]="['/' + user.id]">{{user.firstName}}</a>
                                             <span><i class="ti-comment"></i><a class="cursor-pointer"
                                                     [routerLink]="['/messages']">Messages
                                                     <em>{{messagesCount}}</em></a></span>

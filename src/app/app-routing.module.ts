@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent, canActivate: [NotAuthGuard] },
   // { path: 'notifications', component: NotificationsComponent },
   // { path: 'notifications/:id', component: NotificationsComponent },
-  // { path: 'messages', component: MessagesComponent },
+  { path: 'messages', component: MessagesComponent },
   // { path: 'messages/:id', component: MessagesComponent },
   { path: 'new-post', component: NewPostComponent },
   { path: 'followers', component: FollowersComponent },
