@@ -6,33 +6,44 @@
 					<div class="log-reg-area sign">
 						<h2 class="log-title">Registration</h2>
 						<form method="post">
-                        	<div class="form-group">	
-							  <input type="text" id="input" name="firstName" [(ngModel)]="firstName" required="required"/>
-							  <label class="control-label" for="input">First Name</label><i class="mtrl-select"></i>
+							<div class="form-group">
+								<input type="text" id="firstName" name="firstName" [(ngModel)]="firstName"
+									required="required" />
+								<label class="control-label" for="input">First Name</label><i class="mtrl-select"></i>
 							</div>
-                            <div class="form-group">	
-							  <input type="text" id="input" name="lastName" [(ngModel)]="lastName" required="required"/>
-							  <label class="control-label" for="input">Last Name</label><i class="mtrl-select"></i>
+							<div class="form-group">
+								<input type="text" id="lastName" name="lastName" [(ngModel)]="lastName"
+									required="required" />
+								<label class="control-label" for="input">Last Name</label><i class="mtrl-select"></i>
 							</div>
-                            <div class="form-group">	
-							  <input type="email" id="input" name="email" [(ngModel)]="email" required="required"/>
-							  <label class="control-label" for="input">Email Address</label><i class="mtrl-select"></i>
+							<div class="form-group">
+								<input type="email" id="email" name="email" [(ngModel)]="email" required="required" />
+								<label class="control-label" for="input">Email Address</label><i
+									class="mtrl-select"></i>
 							</div>
-							<div class="form-group">	
-							  <input type="text" id="input" name="username" [(ngModel)]="username" required="required"/>
-							  <label class="control-label" for="input">Username</label><i class="mtrl-select"></i>
+							<div class="form-group">
+								<input type="text" id="username" name="username" [(ngModel)]="username"
+									required="required" />
+								<label class="control-label" for="input">Username</label><i class="mtrl-select"></i>
 							</div>
-							<div class="form-group">	
-							  <input type="password" name="password" [(ngModel)]="password" required="required"/>
-							  <label class="control-label" for="input">Password</label><i class="mtrl-select"></i>
+							<div class="form-group">
+								<input type="password" name="password" [(ngModel)]="password" required="required" />
+								<label class="control-label" for="input">Password</label><i class="mtrl-select"></i>
 							</div>
 							<div class="submit-btns">
-								<button class="mtr-btn signin" (click)="registration()" type="button"><span>Register</span></button>
+								<button class="mtr-btn signin" (click)="registration()" type="button">
+									<i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+									<span style="color: white;">Register</span>
+								</button>
+								<button class="mtr-btn signin" (click)="cancel()" type="button"
+									style="margin-left:10px">
+									<span>Cancel</span>
+								</button>
 							</div>
 						</form>
 					</div>
-                </div>
-            </div>
-        </div>
-    </div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

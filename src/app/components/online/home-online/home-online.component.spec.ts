@@ -39,7 +39,7 @@ describe('HomeOnlineComponent', () => {
     let respostObservable = of(resPost);
 
     let onlineServiceMock = {
-      getFollowers: jasmine.createSpy('getFollowers')
+      getNewFollowers: jasmine.createSpy('getNewFollowers')
         .and.returnValue(followingsObservable),
       saveNewPost: jasmine.createSpy('saveNewPost')
         .and.returnValue(respostObservable),
@@ -83,7 +83,7 @@ describe('HomeOnlineComponent', () => {
   });
 
   it('should get all followers', () => {
-    component.getFollowers()
+    component.getNewFollowers()
     expect(component.followers.length).toEqual(2);
   });
 

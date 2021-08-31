@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -11,7 +12,7 @@ export class OfflineHomeService {
 
   link: string = 'http://localhost:57793/';
   img: string = '../../../../assets/images/resources/user-avatar-default.png';
-  constructor(private client: HttpClient) { }
+  constructor(private client: HttpClient, private router: Router) { }
 
   login(credentials: any) {
     return this.client.post(this.link + 'Login', credentials, this.header())
@@ -32,7 +33,7 @@ export class OfflineHomeService {
   logout() {
     localStorage.removeItem('JWT');
     localStorage.removeItem('user');
-    window.location.reload();
+    this.router.navigate(['/'])
   }
 
   registration(user: any) {
@@ -49,8 +50,7 @@ export class OfflineHomeService {
   getWallPosts() {
     return this.client.get(this.link + 'GetAllOfflineWallPosts', this.header())
       .pipe(map((res: any) => {
-        let response = this.parserImagePost(JSON.parse(res));
-        return response;
+        return this.parserImagePost(JSON.parse(res));;
       }))
   }
 
@@ -78,10 +78,9 @@ export class OfflineHomeService {
       'Access-Control-Allow-Headers': 'Content-Type',
     }
 
-    const requestOptions = {
-      headers: new HttpHeaders(headerDict),
+    return {
+      headers: new HttpHeaders(headerDict)
     };
-    return requestOptions;
   }
 
   parser(res: any) {
