@@ -2,13 +2,13 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { NotAuthGuard } from './guard/not-auth.guard';
-import { AuthGuard } from './guard/auth.guard';
+// import { AuthGuard } from './guard/auth.guard';
 
 import { LoginComponent } from './components/offline/login/login.component';
 import { RegistrationComponent } from './components/offline/registration/registration.component';
 import { OfficialHomeComponent } from './components/official-home/official-home.component';
-import { NotificationsComponent } from './components/online/notifications/notifications.component';
-import { MessagesComponent } from './components/online/messages/messages.component';
+// import { NotificationsComponent } from './components/online/notifications/notifications.component';
+// import { MessagesComponent } from './components/online/messages/messages.component';
 import { ViewProfileComponent } from './components/online/profile/view-profile/view-profile.component';
 import { EditProfileComponent } from './components/online/profile/edit-profile/edit-profile.component';
 import { NewPostComponent } from './components/online/new-post/new-post.component';

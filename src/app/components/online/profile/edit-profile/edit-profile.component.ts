@@ -31,11 +31,13 @@ export class EditProfileComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.online.reloadPage();
     this.user = this.global.getUserInLocalstorage();
-    this.defaultInfo();
-    let split = this.user.dateOfBirth.split('T');
-    this.user.dateOfBirth = split[0];
+    if (this.user !== null) {
+      this.online.reloadPage();
+      let split = this.user.dateOfBirth.split('T');
+      this.user.dateOfBirth = split[0];
+      this.defaultInfo()
+    }
   }
 
   getUserInformations() {

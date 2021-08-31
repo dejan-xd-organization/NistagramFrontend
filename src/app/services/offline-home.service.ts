@@ -34,7 +34,6 @@ export class OfflineHomeService {
     localStorage.removeItem('JWT');
     localStorage.removeItem('user');
     this.router.navigate(['/'])
-    //window.location.reload();
   }
 
   registration(user: any) {
@@ -51,8 +50,7 @@ export class OfflineHomeService {
   getWallPosts() {
     return this.client.get(this.link + 'GetAllOfflineWallPosts', this.header())
       .pipe(map((res: any) => {
-        let response = this.parserImagePost(JSON.parse(res));
-        return response;
+        return this.parserImagePost(JSON.parse(res));;
       }))
   }
 
@@ -80,10 +78,9 @@ export class OfflineHomeService {
       'Access-Control-Allow-Headers': 'Content-Type',
     }
 
-    const requestOptions = {
-      headers: new HttpHeaders(headerDict),
+    return {
+      headers: new HttpHeaders(headerDict)
     };
-    return requestOptions;
   }
 
   parser(res: any) {

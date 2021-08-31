@@ -68,7 +68,6 @@ describe('HomeOnlineComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeOnlineComponent);
-    online = TestBed.get(OnlineHomeService);
     component = fixture.componentInstance;
     component['user'] = {
       id: 1,
@@ -89,10 +88,6 @@ describe('HomeOnlineComponent', () => {
   });
 
   it('should add new post', () => {
-    let post = {
-      userId: 1,
-      description: null
-    }
     component.newPost.userId = 1;
     component.newPost.description = 'Test tekst.'
     component.makeNewPost()

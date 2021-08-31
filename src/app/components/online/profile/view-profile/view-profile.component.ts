@@ -22,11 +22,13 @@ export class ViewProfileComponent implements OnInit {
   constructor(private global: Global, private online: OnlineHomeService) { }
 
   ngOnInit(): void {
-    this.online.reloadPage();
     this.user = this.global.getUserInLocalstorage();
-    this.getMyWallPosts();
-    this.getMyFollowers();
-    this.getMyFollowing();
+    if (this.user != null) {
+      this.online.reloadPage();
+      this.getMyWallPosts();
+      this.getMyFollowers();
+      this.getMyFollowing();
+    }
   }
 
   getUserInformations() {
