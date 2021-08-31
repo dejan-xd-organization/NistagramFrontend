@@ -26,13 +26,15 @@ export class MessagesComponent implements OnInit {
   constructor(private global: Global, private online: OnlineHomeService, private offline: OfflineHomeService) { }
 
   ngOnInit(): void {
-    this.online.reloadPage();
     this.user = this.global.getUserInLocalstorage();
-    this.getNewFollowers();
-    this.getNewFollowings();
-    this.getUserInformations();
-    this.getMyFollowers();
-    this.getMyFollowing();
+    if (this.user != null) {
+      this.online.reloadPage();
+      this.getNewFollowers();
+      this.getNewFollowings();
+      this.getUserInformations();
+      this.getMyFollowers();
+      this.getMyFollowing();
+    }
   }
 
   getUserInformations() {
