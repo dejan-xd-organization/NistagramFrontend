@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +8,6 @@ import { Observable } from 'rxjs';
 export class OnlineHomeService {
 
   link: string = 'http://localhost:57793/';
-  //link1: string = 'http://localhost:6709/';
   img: string = '../../../../assets/images/resources/user-avatar-default.png';
 
   allPosts: any = [];
@@ -42,16 +40,14 @@ export class OnlineHomeService {
   getNewFollowers(id: any) {
     return this.client.get(this.link + 'GetNewFollowers?id=' + id)
       .pipe(map((res: any) => {
-        let response = this.parser(res);
-        return response;
+        return this.parser(res);;
       }))
   }
 
   getNewFollowings(id: any) {
     return this.client.get(this.link + 'GetNewFollowings?id=' + id)
       .pipe(map((res: any) => {
-        let response = this.parser(res);
-        return response;
+        return this.parser(res);;
       }))
   }
 

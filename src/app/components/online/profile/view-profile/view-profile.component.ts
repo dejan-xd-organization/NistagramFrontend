@@ -29,14 +29,13 @@ export class ViewProfileComponent implements OnInit {
       this.idActiveProfile = res.username;
       this.img = res.img;
     });
-    this.online.reloadPage();
     this.user = this.global.getUserInLocalstorage();
     if (this.user !== null) {
+      this.online.reloadPage();
       this.getMyWallPosts();
       this.getMyFollowers();
       this.getMyFollowing();
     }
-
   }
 
   getUserInformations() {
