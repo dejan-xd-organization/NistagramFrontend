@@ -29,6 +29,7 @@ export class ViewProfileComponent implements OnInit {
       this.idActiveProfile = res.username;
       this.img = res.img;
     });
+
     this.user = this.global.getUserInLocalstorage();
     if (this.user !== null) {
       this.online.reloadPage();
