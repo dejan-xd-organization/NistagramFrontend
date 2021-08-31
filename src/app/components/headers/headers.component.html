@@ -11,7 +11,6 @@
     <nav id="menu" class="res-menu">
         <ul *ngIf="isOnlineOffline()">
             <li><a class="cursor-pointer" [routerLink]="['/']" title="">Home</a></li>
-            <!--<li><a class="cursor-pointer" [routerLink]="['/notifications']">Notifications</a></li>-->
             <li><a class="cursor-pointer" [routerLink]="['/messages']">Messages</a></li>
             <li><span>Account</span>
                 <ul>
@@ -58,28 +57,6 @@
         </div>
         <ul class="setting-area" *ngIf="isOnlineOffline()">
             <li><a href="#" title="Home" data-ripple=""><i class="ti-home"></i></a></li>
-            <!--<li>
-                <a href="#" title="Notification" data-ripple="">
-                    <i class="ti-bell"></i><span>{{notifications.length}}</span>
-                </a>-
-                <div class="dropdowns">
-                    <span>{{notifications.length > 0 ? notifications.length + ' New Notifications' : 'No Notifications'}}</span>
-                    <ul class="drops-menu">
-                        <li *ngFor="let item of notifications">
-                            <a class="cursor-pointer" [routerLink]="['/notifications/' + item.id]">
-                                <img src="{{item.user.img}}" alt="">
-                                <div class="mesg-meta">
-                                    <h6>{{item.user.firstName + ' ' + item.user.lastName}}</h6>
-                                    <span>{{item.text}}</span>
-                                    <i>{{item.datetime}}</i>
-                                </div>
-                            </a>
-                            <span class="tag green">New</span>
-                        </li>
-                    </ul>
-                    <a class="more-mesg cursor-pointer" [routerLink]="['/notification']">View More</a>
-                </div>
-            </li>-->
             <li>
                 <a href="#" title="Messages" data-ripple=""><i
                         class="ti-comment"></i><span>{{messages.length}}</span></a>

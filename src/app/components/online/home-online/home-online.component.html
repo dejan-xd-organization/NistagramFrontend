@@ -11,10 +11,6 @@
                                 <div class="widget">
                                     <h4 class="widget-title">Shortcuts</h4>
                                     <ul class="naves">
-                                        <!--<li>
-                                            <i class="ti-clipboard"></i>
-                                            <a class="cursor-pointer" [routerLink]="['/new-post']">New post</a>
-                                        </li>-->
                                         <li>
                                             <i class="ti-comments-smiley"></i>
                                             <a class="cursor-pointer" [routerLink]="['/messages']">Messages</a>
@@ -28,8 +24,6 @@
                                             <a class="cursor-pointer" [routerLink]="['/followers']">Followers</a>
                                         </li>
                                         <li>
-                                            <!--<i class="ti-user"></i>
-                                            <em> issue-->
                                             <i class="ti-user"></i>
                                             <a class="cursor-pointer" [routerLink]="['/followers']">Following</a>
                                         </li>
@@ -37,10 +31,6 @@
                                             <i class="ti-image"></i>
                                             <a class="cursor-pointer" [routerLink]="['/images']">Images</a>
                                         </li>
-                                        <!--<li>
-                                            <i class="ti-bell"></i>
-                                            <a class="cursor-pointer" [routerLink]="['/notifications']">Notifications</a>
-                                        </li>-->
                                         <li>
                                             <i class="ti-power-off"></i>
                                             <a class="cursor-pointer" (click)="logout()">Logout</a>
@@ -137,38 +127,6 @@
 
                                             </div>
                                         </div>
-                                        <!--<div class="coment-area">
-                                            <ul class="we-comet" *ngIf="item.comments.length > 0">
-                                                <li *ngFor="let comment of item.comments">
-                                                    <div class="comet-avatar">
-                                                        <img src="{{comment.user.img}}" alt="">
-                                                    </div>
-                                                    <div class="we-comment">
-                                                        <div class="coment-head">
-                                                            <h5><a class="cursor-pointer"
-                                                                    [routerLink]="['/' + comment.user.username]">{{comment.user.firstName
-                                                                    + " " + comment.user.lastName}}</a></h5>
-                                                            <span>{{comment.dateCreated | date : 'dd. MMM yyyy HH:mm'}}</span>
-                                                        </div>
-                                                        <p>{{comment.text}}</p>
-                                                    </div>
-                                                </li>
-
-                                                <li class="post-comment">
-                                                    <div class="comet-avatar">
-                                                        <img src="{{user.img}}" alt="">
-                                                    </div>
-                                                    <div class="post-comt-box">
-                                                        <form method="post">
-                                                            <textarea [(ngModel)]="newComment.text" [ngModelOptions]="{standalone: true}"
-                                                             placeholder="Post your comment"></textarea>
-                                                            <button type="submit" style="background:#088dcd;bottom:7px!important" 
-                                                            (click)="makeNewComment(item)">Comment</button>
-                                                        </form>
-                                                    </div>
-                                                </li>
-                                            </ul>                                         
-                                        </div>-->
                                     </div>
                                 </div>
                             </div>
@@ -187,9 +145,6 @@
                                             <span><i class="ti-comment"></i><a class="cursor-pointer"
                                                     [routerLink]="['/messages']">Messages
                                                     <em>{{messagesCount}}</em></a></span>
-                                            <!--<span><i class="ti-bell"></i><a class="cursor-pointer"
-                                                    [routerLink]="['/notifications']">Notifications
-                                                    <em>{{notificationsCount}}</em></a></span>-->
                                         </div>
                                         <div class="page-likes">
                                             <ul class="nav nav-tabs likes-btn">
@@ -201,13 +156,9 @@
                                             <!-- Tab panes -->
                                             <div class="tab-content">
                                                 <div class="tab-pane active fade show " id="link1">
-                                                    <!--<span><i class="ti-heart"></i>{{user.followers}}</span>
-                                                    <em> issue-->
                                                     <span><em class="ti-heart"></em>{{user.followers}}</span>
                                                 </div>
                                                 <div class="tab-pane fade" id="link2">
-                                                    <!--<span><i class="ti-eye"></i>{{user.followings}}</span>
-                                                    <em> issue-->
                                                     <span><em class="ti-eye"></em>{{user.followings}}</span>
                                                 </div>
                                             </div>

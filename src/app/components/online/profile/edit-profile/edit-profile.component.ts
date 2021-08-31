@@ -32,9 +32,10 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.global.getUserInLocalstorage();
-    let split = this.user.dateOfBirth.split('T');
-    this.user.dateOfBirth = split[0];
-    console.log(this.user)
+    if (this.user !== null) {
+      let split = this.user.dateOfBirth.split('T');
+      this.user.dateOfBirth = split[0];
+    }
   }
 
   getUserInformations() {
