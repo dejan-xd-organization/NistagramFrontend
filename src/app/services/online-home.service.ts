@@ -111,6 +111,14 @@ export class OnlineHomeService {
     return this.client.put(this.link + 'ChangePassword', { id: id, oldPassword: oldPassword, newPassword: newPassword });
   }
 
+  getChatByUser(friendId: any, userId: any) {
+    return this.client.get(this.link + 'GetChatByUser?friendId=' + friendId + '&userId=' + userId);
+  }
+
+  sendMessage(text: any, userId: any, friendId: any) {
+    return this.client.post(this.link + 'SendMessage', { text: text, userId: userId, friendId: friendId })
+  }
+
   parser(res: any) {
     let response: any = [];
     res.forEach((element: any) => {

@@ -3,7 +3,7 @@
         <figure><img src="{{user.img}}" alt="">
         </figure>
         <div class="friend-meta">
-            <h4><a class="cursor-pointer" [routerLink]="['/' + user.username]">{{user.firstName + ' ' +
+            <h4><a class="cursor-pointer" [routerLink]="['/' + user.id]">{{user.firstName + ' ' +
                     user.lastName}}</a></h4>
             <a class="cursor-pointer" (click)="sendFolower(user)" 
             class=" cursor-pointer underline">{{user.email}}</a>

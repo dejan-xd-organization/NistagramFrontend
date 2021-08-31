@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Global } from 'src/app/global/global';
 import { OnlineHomeService } from 'src/app/services/online-home.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-profile',
@@ -19,11 +20,18 @@ export class ViewProfileComponent implements OnInit {
   activeTab: any = 'timeline'
   activePane: any = 'followers'
   allPosts: any = [];
-  constructor(private global: Global, private online: OnlineHomeService) { }
+  idActiveProfile: any = null;
+  img: any = null;
+  constructor(private global: Global, private online: OnlineHomeService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.activatedRoute.params.subscribe(res => {
+      this.idActiveProfile = res.username;
+      this.img = res.img;
+    });
+
     this.user = this.global.getUserInLocalstorage();
-    if (this.user != null) {
+    if (this.user !== null) {
       this.online.reloadPage();
       this.getMyWallPosts();
       this.getMyFollowers();
@@ -44,7 +52,7 @@ export class ViewProfileComponent implements OnInit {
   }
 
   getMyWallPosts() {
-    this.online.getMyWallPosts(this.user.id).subscribe((res: any) => {
+    this.online.getMyWallPosts(this.idActiveProfile).subscribe((res: any) => {
       this.allPosts = res;
     }, (error: any) => {
       this.allPosts = [];

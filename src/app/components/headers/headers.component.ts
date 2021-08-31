@@ -47,7 +47,7 @@ export class HeadersComponent implements OnInit {
   }
 
   filter() {
-    if (this.searchText.length > 2) {
+    if (this.searchText !== null && this.searchText.length > 2) {
       this.offline.findUser(this.searchText).subscribe((res: any) => {
         this.filterUser = res;
         if (this.filterUser.length > 0) this.isShow = true;
@@ -57,12 +57,13 @@ export class HeadersComponent implements OnInit {
     else {
       this.isShow = false;
     }
+
   }
 
   openProfile(user: any) {
     this.searchText = null;
     this.isShow = false;
     this.filterUser = [];
-    this.router.navigate(['/' + user.username])
+    this.router.navigate(['/' + user.id])
   }
 }

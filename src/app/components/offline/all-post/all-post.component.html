@@ -6,7 +6,7 @@
                     <img src="{{post.user.img}}" alt="">
                 </figure>
                 <div class="friend-name">
-                    <ins><a class="cursor-pointer" [routerLink]="['/' + post.user.username]"
+                    <ins><a class="cursor-pointer" [routerLink]="['/' + post.user.id]"
                             title="">{{post.user.firstName + ' ' + post.user.lastName}}</a></ins>
                     <span>Published: {{post.timePublis | date : 'dd. MMM yyyy HH:mm'}}</span>
                 </div>
@@ -42,7 +42,7 @@
                         <div class="we-comment">
                             <div class="coment-head">
                                 <h5><a class="cursor-pointer"
-                                        [routerLink]="['/' + comment.user.username]">{{comment.user.firstName + ' ' +
+                                        [routerLink]="['/' + comment.user.id]">{{comment.user.firstName + ' ' +
                                         comment.user.lastName}}</a></h5>
                                 <span>{{comment.timeDateComments}}</span>
                             </div>

@@ -1,4 +1,4 @@
-<section *ngIf="user!==null">
+<section>
     <div class="gap2 gray-bg">
         <div class="container-fluid">
             <div class="row">
@@ -21,7 +21,7 @@
                                                 <span [ngClass]="{'active-tab':activeTab==='images'}">Images</span>
                                             </a>
                                         </li>
-                                        <li>
+                                        <li *ngIf="user !== null && idActiveProfile==user.id">
                                             <i class="ti-link"></i>
                                             <a class="cursor-pointer" (click)="activeTab='friends'">
                                                 <span [ngClass]="{'active-tab':activeTab==='friends'}">Friends</span>
@@ -32,7 +32,7 @@
                             </aside>
                         </div><!-- sidebar -->
 
-                        <div class="col-lg-6" *ngIf="user != null && activeTab==='timeline'">
+                        <div class="col-lg-6" *ngIf="activeTab==='timeline'">
                             <div class="loadMore" *ngIf="allPosts.length > 0">
                                 <div class="central-meta item" *ngFor="let item of allPosts">
                                     <div class="user-post">
@@ -41,7 +41,7 @@
                                                 <img [src]="setImage(item.user.img)" alt="">
                                             </figure>
                                             <div class="friend-name">
-                                                <ins><a class="cursor-pointer" [routerLink]="['/' + item.user.username]"
+                                                <ins><a class="cursor-pointer" [routerLink]="['/' + item.user.id]"
                                                         title="">{{item.user.firstName + " " +
                                                         item.user.lastName}}</a></ins>
                                                 <span>Published: {{item.timePublis | date : 'dd. MMM yyyy
@@ -112,8 +112,8 @@
                                                 <li *ngFor="let i of followers">
                                                     <div class="nearly-pepls">
                                                         <figure>
-                                                            <a [routerLink]="['/' + i.username]" title=""><img
-                                                                    src="{{i.img}}" alt=""></a>
+                                                            <a [routerLink]="['/' + i.id]" title=""><img src="{{i.img}}"
+                                                                    alt=""></a>
                                                         </figure>
                                                         <div class="pepl-info">
                                                             <h4>{{i.firstName + ' ' + i.lastName}}</h4>
@@ -129,8 +129,8 @@
                                                 <li *ngFor="let i of following">
                                                     <div class="nearly-pepls">
                                                         <figure>
-                                                            <a [routerLink]="['/' + i.username]" title=""><img
-                                                                    src="{{i.img}}" alt=""></a>
+                                                            <a [routerLink]="['/' + i.id]" title=""><img src="{{i.img}}"
+                                                                    alt=""></a>
                                                         </figure>
                                                         <div class="pepl-info">
                                                             <h4>{{i.firstName + ' ' + i.lastName}}</h4>
@@ -151,10 +151,10 @@
                                     <h4 class="widget-title">Your page</h4>
                                     <div class="your-page">
                                         <figure>
-                                            <a [routerLink]="['/' + user.username]"><img src="{{user.img}}" alt=""></a>
+                                            <a [routerLink]="['/' + user.id]"><img src="{{user.img}}" alt=""></a>
                                         </figure>
                                         <div class="page-meta">
-                                            <a [routerLink]="['/' + user.username]">{{user.firstName}}</a>
+                                            <a [routerLink]="['/' + user.id]">{{user.firstName}}</a>
                                             <span><i class="ti-comment"></i><a class="cursor-pointer"
                                                     [routerLink]="['/messages']">Messages
                                                     <em>{{messagesCount}}</em></a></span>

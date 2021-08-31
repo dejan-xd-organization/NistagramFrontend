@@ -14,8 +14,8 @@
             <li><a class="cursor-pointer" [routerLink]="['/messages']">Messages</a></li>
             <li><span>Account</span>
                 <ul>
-                    <li><a class="cursor-pointer" [routerLink]="['/' + user.username]">View Profile</a></li>
-                    <li><a class="cursor-pointer" [routerLink]="['/' + user.username + '/edit']">Edit Profile</a></li>
+                    <li><a class="cursor-pointer" [routerLink]="['/' + user.id]">View Profile</a></li>
+                    <li><a class="cursor-pointer" [routerLink]="['/' + user.id + '/edit']">Edit Profile</a></li>
                 </ul>
             </li>
             <li><a class="cursor-pointer" (click)="logout()">Log out</a></li>
@@ -88,7 +88,7 @@
             <img src="{{user.img}}" alt="" width="50px" height="50px">
             <span class="status f-online"></span>
             <div class="user-setting">
-                <a class="cursor-pointer" [routerLink]="['/' + user.username]"><i class="ti-user"></i> View Profile</a>
+                <a class="cursor-pointer" [routerLink]="['/' + user.id]"><i class="ti-user"></i> View Profile</a>
                 <a class="cursor-pointer" [routerLink]="['/edit']"><i class="ti-pencil-alt"></i>Edit
                     Profile</a>
                 <a class="cursor-pointer" (click)="logout()"><i class="ti-power-off"></i>Log out</a>
