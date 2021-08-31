@@ -4,36 +4,18 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="row merged20" id="page-contents">
-
                         <div class="col-lg-3">
                             <aside class="sidebar static left" *ngIf="user != null">
-
                                 <div class="widget">
                                     <h4 class="widget-title">Shortcuts</h4>
                                     <ul class="naves">
-                                        <li>
-                                            <i class="ti-clipboard"></i>
-                                            <a class="cursor-pointer" [routerLink]="['/new-post']">New post</a>
-                                        </li>
                                         <li>
                                             <i class="ti-comments-smiley"></i>
                                             <a class="cursor-pointer" [routerLink]="['/messages']">Messages</a>
                                         </li>
                                         <li>
-                                            <i class="ti-files"></i>
-                                            <a class="cursor-pointer" [routerLink]="['/' + user.username]">Profile</a>
-                                        </li>
-                                        <li>
                                             <i class="ti-user"></i>
-                                            <a class="cursor-pointer" [routerLink]="['/followers']">Followers</a>
-                                        </li>
-                                        <li>
-                                            <i class="ti-image"></i>
-                                            <a class="cursor-pointer" [routerLink]="['/images']">Images</a>
-                                        </li>
-                                        <li>
-                                            <i class="ti-bell"></i>
-                                            <a class="cursor-pointer" [routerLink]="['/notifications']">Notifications</a>
+                                            <a class="cursor-pointer" [routerLink]="['/' + user.username]">Profile</a>
                                         </li>
                                         <li>
                                             <i class="ti-power-off"></i>
@@ -42,22 +24,35 @@
                                     </ul>
                                 </div><!-- Shortcuts -->
 
-                                <div class="widget stick-widget">
-                                    <h4 class="widget-title">New follownig</h4>
+                                <div class="widget">
+                                    <h4 class="widget-title">New Followers</h4>
                                     <ul *ngIf="followers != null" class="followers">
                                         <li *ngFor="let item of followers">
-                                            <figure><img src="{{item.img}}" width="50px" height="50px"
-                                                    alt="">
+                                            <figure><img src="{{item.img}}" width="50px" height="50px" alt="">
                                             </figure>
                                             <div class="friend-meta">
                                                 <h4><a class="cursor-pointer" [routerLink]="['/' + item.username]">
-                                                {{item.firstName + ' ' + item.lastName}}</a></h4>
-                                                <a class="cursor-pointer" class="underline">Followers</a>
+                                                        {{item.firstName + ' ' + item.lastName}}</a></h4>
+                                                <a class="cursor-pointer" class="underline">{{item.email}}</a>
                                             </div>
                                         </li>
                                     </ul>
                                 </div><!-- who's following -->
 
+                                <div class="widget">
+                                    <h4 class="widget-title">New Follownig</h4>
+                                    <ul *ngIf="following != null" class="followers">
+                                        <li *ngFor="let item of following">
+                                            <figure><img src="{{item.img}}" width="50px" height="50px" alt="">
+                                            </figure>
+                                            <div class="friend-meta">
+                                                <h4><a class="cursor-pointer" [routerLink]="['/' + item.username]">
+                                                        {{item.firstName + ' ' + item.lastName}}</a></h4>
+                                                <a class="cursor-pointer" class="underline">{{item.email}}</a>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div><!-- who's following -->
                             </aside>
                         </div><!-- sidebar -->
 
@@ -70,36 +65,22 @@
                                     </figure>
                                     <div class="newpst-input">
                                         <form method="post">
-                                            <textarea rows="2" [(ngModel)]="newPost.text" [ngModelOptions]="{standalone: true}"
-                                             placeholder="write something"></textarea>
+                                            <textarea rows="2" [(ngModel)]="newPost.description"
+                                                [ngModelOptions]="{standalone: true}"
+                                                placeholder="write something"></textarea>
                                             <div class="attachments">
                                                 <ul>
                                                     <li>
-                                                        <i class="fa fa-music"></i>
+                                                        <i class="fa fa-image" style="color: black;"></i>
                                                         <label class="fileContainer">
                                                             <input type="file">
                                                         </label>
                                                     </li>
                                                     <li>
-                                                        <i class="fa fa-image"></i>
-                                                        <label class="fileContainer">
-                                                            <input type="file">
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <i class="fa fa-video-camera"></i>
-                                                        <label class="fileContainer">
-                                                            <input type="file">
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <i class="fa fa-camera"></i>
-                                                        <label class="fileContainer">
-                                                            <input type="file">
-                                                        </label>
-                                                    </li>
-                                                    <li>
-                                                        <button type="submit" (click)="makeNewPost()">Post</button>
+                                                        <button type="submit" (click)="makeNewPost()">
+                                                            <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i>
+                                                            <span style="color: white;">Post</span>
+                                                        </button>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -115,68 +96,39 @@
                                     <div class="user-post">
                                         <div class="friend-info">
                                             <figure>
-                                                <img src="{{item.user.img}}"
-                                                    alt="">
+                                                <img [src]="setImage(item.user.img)" alt="">
                                             </figure>
                                             <div class="friend-name">
                                                 <ins><a class="cursor-pointer" [routerLink]="['/' + item.user.username]"
-                                                        title="">{{item.user.firstName + " " + item.user.lastName}}</a></ins>
-                                                <span>Published: {{item.datetime | date : 'dd. MMM yyyy HH:mm'}}</span>
+                                                        title="">{{item.user.firstName + " " +
+                                                        item.user.lastName}}</a></ins>
+                                                <span>Published: {{item.timePublis | date : 'dd. MMM yyyy
+                                                    HH:mm'}}</span>
                                             </div>
                                             <div class="post-meta">
-                                                <img src="{{item.user.img}}" alt="">
+                                                <div class="description">
+                                                    <p>{{item.postDescription}}</p>
+                                                </div>
+                                                <img [src]="item.imagePost" alt="">
                                                 <div class="we-video-info">
                                                     <ul>
-                                                        <li>
+                                                        <li style="cursor:pointer;" (click)="like(item)">
                                                             <span class="like" data-toggle="tooltip" title="like">
                                                                 <i class="ti-heart"></i>
-                                                                <ins>{{item.likeCount}}</ins>
+                                                                <ins>{{item.like}}</ins>
                                                             </span>
                                                         </li>
                                                         <li>
-                                                            <span class="dislike" data-toggle="tooltip" title="dislike">
+                                                            <span class="dislike" data-toggle="tooltip"
+                                                                (click)="dislike(item)" title="dislike">
                                                                 <i class="ti-heart-broken"></i>
-                                                                <ins>{{item.dislikeCount}}</ins>
+                                                                <ins>{{item.dislike}}</ins>
                                                             </span>
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <div class="description">
-                                                    <p>{{item.text}}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="coment-area">
-                                            <ul class="we-comet" *ngIf="item.comments.length > 0">
-                                                <li *ngFor="let comment of item.comments">
-                                                    <div class="comet-avatar">
-                                                        <img src="{{comment.user.img}}" alt="">
-                                                    </div>
-                                                    <div class="we-comment">
-                                                        <div class="coment-head">
-                                                            <h5><a class="cursor-pointer"
-                                                                    [routerLink]="['/' + comment.user.username]">{{comment.user.firstName
-                                                                    + " " + comment.user.lastName}}</a></h5>
-                                                            <span>{{comment.dateCreated | date : 'dd. MMM yyyy HH:mm'}}</span>
-                                                        </div>
-                                                        <p>{{comment.text}}</p>
-                                                    </div>
-                                                </li>
 
-                                                <li class="post-comment">
-                                                    <div class="comet-avatar">
-                                                        <img src="{{user.img}}" alt="">
-                                                    </div>
-                                                    <div class="post-comt-box">
-                                                        <form method="post">
-                                                            <textarea [(ngModel)]="newComment.text" [ngModelOptions]="{standalone: true}"
-                                                             placeholder="Post your comment"></textarea>
-                                                            <button type="submit" style="background:#088dcd;bottom:7px!important" 
-                                                            (click)="makeNewComment(item)">Comment</button>
-                                                        </form>
-                                                    </div>
-                                                </li>
-                                            </ul>                                         
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -185,21 +137,17 @@
 
                         <div class="col-lg-3">
                             <aside class="sidebar static right" *ngIf="user != null">
-                                <div class="widget">
+                                <div class="widget stick-widget">
                                     <h4 class="widget-title">Your page</h4>
                                     <div class="your-page">
                                         <figure>
-                                            <a [routerLink]="['/' + user.username]"><img
-                                                    src="{{user.img}}" alt=""></a>
+                                            <a [routerLink]="['/' + user.username]"><img src="{{user.img}}" alt=""></a>
                                         </figure>
                                         <div class="page-meta">
                                             <a [routerLink]="['/' + user.username]">{{user.firstName}}</a>
                                             <span><i class="ti-comment"></i><a class="cursor-pointer"
                                                     [routerLink]="['/messages']">Messages
                                                     <em>{{messagesCount}}</em></a></span>
-                                            <span><i class="ti-bell"></i><a class="cursor-pointer"
-                                                    [routerLink]="['/notifications']">Notifications
-                                                    <em>{{notificationsCount}}</em></a></span>
                                         </div>
                                         <div class="page-likes">
                                             <ul class="nav nav-tabs likes-btn">
@@ -211,10 +159,10 @@
                                             <!-- Tab panes -->
                                             <div class="tab-content">
                                                 <div class="tab-pane active fade show " id="link1">
-                                                    <span><i class="ti-heart"></i>{{followersCount}}</span>
+                                                    <span><i class="ti-heart"></i> {{user.followers}}</span>
                                                 </div>
                                                 <div class="tab-pane fade" id="link2">
-                                                    <span><i class="ti-eye"></i>{{followingCount}}</span>
+                                                    <span><i class="ti-eye"></i> {{user.followings}}</span>
                                                 </div>
                                             </div>
                                         </div>

@@ -3,33 +3,33 @@
         <div class="user-post">
             <div class="friend-info">
                 <figure>
-                    <img src="{{post.ownerPost.img}}" alt="">
+                    <img src="{{post.user.img}}" alt="">
                 </figure>
                 <div class="friend-name">
-                    <ins><a class="cursor-pointer" [routerLink]="['/' + post.ownerPost.username]"
-                            title="">{{post.ownerPost.firstName + ' ' + post.ownerPost.lastName}}</a></ins>
-                    <span>published: {{post.timePublis}}</span>
+                    <ins><a class="cursor-pointer" [routerLink]="['/' + post.user.username]"
+                            title="">{{post.user.firstName + ' ' + post.user.lastName}}</a></ins>
+                    <span>Published: {{post.timePublis | date : 'dd. MMM yyyy HH:mm'}}</span>
                 </div>
                 <div class="post-meta">
+                    <div class="description">
+                        <p>{{post.postDescription}}</p>
+                    </div>
                     <img *ngIf="post.imagePost !== null" src="{{post.imagePost}}" alt="">
                     <div class="we-video-info">
                         <ul>
                             <li>
                                 <span class="like" data-toggle="tooltip" title="like">
                                     <i class="ti-heart"></i>
-                                    <ins>{{post.likes}}</ins>
+                                    <ins>{{post.like}}</ins>
                                 </span>
                             </li>
                             <li>
                                 <span class="dislike" data-toggle="tooltip" title="dislike">
                                     <i class="ti-heart-broken"></i>
-                                    <ins>{{post.unlike}}</ins>
+                                    <ins>{{post.dislike}}</ins>
                                 </span>
                             </li>
                         </ul>
-                    </div>
-                    <div class="description">
-                        <p>{{post.descriptionPost}}</p>
                     </div>
                 </div>
             </div>

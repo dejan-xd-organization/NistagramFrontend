@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OnlineHomeService {
 
+  link: string = 'http://localhost:57793/';
+  img: string = '../../../../assets/images/resources/user-avatar-default.png';
+
   allPosts: any = [];
   testList: any = [];
-  constructor() {
+  constructor(private client: HttpClient) {
     this.testList = [
       {
         id: 1,
@@ -32,39 +37,55 @@ export class OnlineHomeService {
     return this.testList;
   }
 
-  getFollowers() {
-    return [
-      {
-        id: 1,
-        firstName: "Novica",
-        lastName: "Nikolić",
-        username: "nole",
-        img: "../../../../assets/images/resources/user-avatar2.jpg"
-      }
-    ]
+  getNewFollowers(id: any) {
+    return this.client.get(this.link + 'GetNewFollowers?id=' + id)
+      .pipe(map((res: any) => {
+        return this.parser(res);;
+      }))
+  }
+
+  getNewFollowings(id: any) {
+    return this.client.get(this.link + 'GetNewFollowings?id=' + id)
+      .pipe(map((res: any) => {
+        return this.parser(res);;
+      }))
+  }
+
+  getMyFollowers(id: any, page: any) {
+    return this.client.get(this.link + 'GetMyFollowers?id=' + id + '&page=' + page)
+  }
+
+  getMyFollowing(id: any, page: any) {
+    return this.client.get(this.link + 'getMyFollowing?id=' + id + '&page=' + page)
   }
 
   saveNewPost(post: any) {
-    post["id"] = this.allPosts.length + 1;
-    post["datetime"] = Date.now();
-    post["likeCount"] = 10;
-    post["dislikeCount"] = 1;
-    post["comments"] = []
-    post.comments = [
-      {
-        id: 1,
-        user: {
-          id: 1,
-          firstName: "Novica",
-          lastName: "Nikolić",
-          username: "nole",
-          img: "../../../../assets/images/resources/user-avatar2.jpg"
-        },
-        dateCreated: Date.now(),
-        text: "Neki tekst"
-      }
-    ]
-    return post
+    return this.client.post(this.link + 'NewPost', post)
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
+
+  getWallPosts() {
+    return this.client.get(this.link + 'GetAllOnlineWallPosts')
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
+
+  getMyWallPosts(id: any) {
+    return this.client.get(this.link + 'GetMyOnlineWallPosts?id=' + id)
+      .pipe(map((res: any) => {
+        return res;
+      }))
+  }
+
+  like(id: any, userId: any) {
+    return this.client.put(this.link + 'Like', { id: id, userId: userId });
+  }
+
+  dislike(id: any, userId: any) {
+    return this.client.put(this.link + 'Dislike', { id: id, userId: userId });
   }
 
   saveNewComment(data: any) {
@@ -81,4 +102,50 @@ export class OnlineHomeService {
       followingCounter: 50
     }
   }
+
+  updateUser(user: any) {
+    return this.client.put(this.link + 'UpdateUser', user);
+  }
+
+  changePassword(id: any, oldPassword: any, newPassword: any) {
+    return this.client.put(this.link + 'ChangePassword', { id: id, oldPassword: oldPassword, newPassword: newPassword });
+  }
+
+  parser(res: any) {
+    let response: any = [];
+    res.forEach((element: any) => {
+      if (element.img === null) element.img = this.img;
+      response.push(element);
+    });
+    return response;
+  }
+
+  parserImagePost(res: any) {
+    let response: any = [];
+    res.forEach((element: any) => {
+      if (element.imagePost === null) element['img'] = this.img;
+      else element['img'] = element.imagePost;
+
+      element.user = this.parserUser(element.user);
+
+      response.push(element);
+    });
+    return response;
+  }
+
+  parserUser(user: any) {
+    if (user.img === null) user.img = this.img;
+    return user;
+  }
+
+  reloadPage() {
+    if (!localStorage.getItem('foo')) {
+      localStorage.setItem('foo', 'no reload')
+      location.reload()
+    } else {
+      localStorage.removeItem('foo')
+    }
+
+  }
+
 }

@@ -1,25 +1,28 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { EditProfileComponent } from './edit-profile.component';
+import { ViewProfileComponent } from '../view-profile/view-profile.component';
 
 describe('EditProfileComponent', () => {
-  let component: EditProfileComponent;
+  let component: ViewProfileComponent;
   let fixture: ComponentFixture<EditProfileComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditProfileComponent ]
+      imports: [
+        HttpClientTestingModule
+      ],
+      declarations: [EditProfileComponent]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EditProfileComponent);
-    component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeUndefined();
   });
 });

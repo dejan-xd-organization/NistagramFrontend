@@ -11,7 +11,6 @@
     <nav id="menu" class="res-menu">
         <ul *ngIf="isOnlineOffline()">
             <li><a class="cursor-pointer" [routerLink]="['/']" title="">Home</a></li>
-            <li><a class="cursor-pointer" [routerLink]="['/notifications']">Notifications</a></li>
             <li><a class="cursor-pointer" [routerLink]="['/messages']">Messages</a></li>
             <li><span>Account</span>
                 <ul>
@@ -30,15 +29,15 @@
 </div><!-- responsive header -->
 
 <div class="topbar stick">
-    <div class="logo">
-        <a class="cursor-pointer" [routerLink]="['/']"><img src="../assets/images/logo.png" alt=""></a>
+    <div class="logo" style="width:145px;">
+        <a class="cursor-pointer" [routerLink]="['/']"><img src="../assets/images/nistagram-logo.png" alt=""></a>
     </div>
 
     <div class="top-area">
-        <div class="top-search">
-            <form method="post" class="">
+        <div class="top-search" style="margin-left:50px;">
+            <form method="post">
                 <input type="text" id="searchText" name="searchText" [(ngModel)]="searchText" (input)="filter()"
-                 placeholder="Search Friend">
+                    placeholder="Search Friend">
                 <button data-ripple><i class="ti-search"></i></button>
             </form>
         </div>
@@ -46,8 +45,7 @@
             <div class="float-left body" *ngFor="let item of filterUser">
                 <a class="cursor-pointer" (click)="openProfile(item)">
                     <div class="float-left" style="width:50px;">
-                        <img style="border-radius:50%;" src="{{item.img}}" alt=""
-                         width="40px" height="50px" />
+                        <img style="border-radius:50%;" src="{{item.img}}" alt="" width="40px" height="50px" />
                     </div>
                     <div class="float-left">
                         <div class="filter-username">
@@ -55,34 +53,13 @@
                         </div>
                     </div>
                 </a>
-            </div> 
+            </div>
         </div>
         <ul class="setting-area" *ngIf="isOnlineOffline()">
             <li><a href="#" title="Home" data-ripple=""><i class="ti-home"></i></a></li>
             <li>
-                <a href="#" title="Notification" data-ripple="">
-                    <i class="ti-bell"></i><span>{{notifications.length}}</span>
-                </a>
-                <div class="dropdowns">
-                    <span>{{notifications.length > 0 ? notifications.length + ' New Notifications' : 'No Notifications'}}</span>
-                    <ul class="drops-menu">
-                        <li *ngFor="let item of notifications">
-                            <a class="cursor-pointer" [routerLink]="['/notifications/' + item.id]">
-                                <img src="{{item.user.img}}" alt="">
-                                <div class="mesg-meta">
-                                    <h6>{{item.user.firstName + ' ' + item.user.lastName}}</h6>
-                                    <span>{{item.text}}</span>
-                                    <i>{{item.datetime}}</i>
-                                </div>
-                            </a>
-                            <span class="tag green">New</span>
-                        </li>
-                    </ul>
-                    <a class="more-mesg cursor-pointer" [routerLink]="['/notification']">View More</a>
-                </div>
-            </li>
-            <li>
-                <a href="#" title="Messages" data-ripple=""><i class="ti-comment"></i><span>{{messages.length}}</span></a>
+                <a href="#" title="Messages" data-ripple=""><i
+                        class="ti-comment"></i><span>{{messages.length}}</span></a>
                 <div class="dropdowns">
                     <span>{{messages.length > 0 ? messages.length + ' New Messages' : 'No Messages'}}</span>
                     <ul class="drops-menu">
@@ -111,8 +88,9 @@
             <img src="{{user.img}}" alt="" width="50px" height="50px">
             <span class="status f-online"></span>
             <div class="user-setting">
-                <a class="cursor-pointer" [routerLink]="['/registration']"><i class="ti-user"></i> View Profile</a>
-                <a class="cursor-pointer" [routerLink]="['/registration']"><i class="ti-pencil-alt"></i>Edit Profile</a>
+                <a class="cursor-pointer" [routerLink]="['/' + user.username]"><i class="ti-user"></i> View Profile</a>
+                <a class="cursor-pointer" [routerLink]="['/edit']"><i class="ti-pencil-alt"></i>Edit
+                    Profile</a>
                 <a class="cursor-pointer" (click)="logout()"><i class="ti-power-off"></i>Log out</a>
             </div>
         </div>

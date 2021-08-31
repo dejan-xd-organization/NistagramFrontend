@@ -12,6 +12,7 @@ export class HomeOnlineComponent implements OnInit {
 
   user: any = null;
   followers: any = null;
+  following: any = null;
   newMedia: any = null;
   newPost: any;
   allPosts: any = [];
@@ -20,10 +21,11 @@ export class HomeOnlineComponent implements OnInit {
   notificationsCount: any = null;
   followersCount: any = null;
   followingCount: any = null;
+  isLoading: any = false;
   constructor(private global: Global, private online: OnlineHomeService, private offline: OfflineHomeService) {
     this.newPost = {
-      user: null,
-      text: null
+      userId: null,
+      description: null
     }
     this.newComment = {
       user: null,
@@ -33,18 +35,56 @@ export class HomeOnlineComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.online.reloadPage();
     this.user = this.global.getUserInLocalstorage();
-    this.getFollowers();
+    this.getNewFollowers();
+    this.getNewFollowings();
     this.getUserInformations();
+    this.getWallPosts();
+  }
+
+  getWallPosts() {
+    this.online.getWallPosts().subscribe((res: any) => {
+      this.allPosts = res;
+    }, (error: any) => {
+      this.allPosts = [];
+    })
+  }
+
+  setImage(item: any) {
+    return item == null ? '../../../../assets/images/resources/user-avatar-default.png' : item;
+  }
+
+  like(item: any) {
+    this.online.like(item.id, this.user.id).subscribe((res: any) => {
+      if (res) {
+        item.like += 1;
+      }
+    })
+  }
+
+  dislike(item: any) {
+    this.online.dislike(item.id, this.user.id).subscribe((res: any) => {
+      if (res) {
+        item.dislike += 1;
+      }
+    })
   }
 
   makeNewPost() {
-    this.newPost.user = this.user
-    this.allPosts.push(this.online.saveNewPost(this.newPost))
-    this.newPost = {
-      user: null,
-      text: null
-    }
+    this.isLoading = true;
+    this.newPost.userId = this.user.id
+    this.online.saveNewPost(this.newPost).subscribe((res: any) => {
+      res['user'] = this.user;
+      res['like'] = 0;
+      res['dislike'] = 0;
+      this.allPosts.unshift(res);
+      this.newPost = {
+        userId: null,
+        description: null
+      }
+      this.isLoading = false;
+    })
   }
 
   makeNewComment(post: any) {
@@ -71,8 +111,16 @@ export class HomeOnlineComponent implements OnInit {
     this.followingCount = counter.followingCounter
   }
 
-  getFollowers() {
-    this.followers = this.online.getFollowers();
+  getNewFollowers() {
+    this.online.getNewFollowers(this.user.id).subscribe((res: any) => {
+      this.followers = res;
+    });
+  }
+
+  getNewFollowings() {
+    this.online.getNewFollowings(this.user.id).subscribe((res: any) => {
+      this.following = res;
+    });
   }
 
   logout() {

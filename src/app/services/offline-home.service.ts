@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -9,15 +10,15 @@ import { Observable } from 'rxjs';
 })
 export class OfflineHomeService {
 
-  link: string = 'http://localhost:5000/';
+  link: string = 'http://localhost:57793/';
   img: string = '../../../../assets/images/resources/user-avatar-default.png';
-  constructor(private client: HttpClient) { }
+  constructor(private client: HttpClient, private router: Router) { }
 
   login(credentials: any) {
     return this.client.post(this.link + 'Login', credentials, this.header())
       .pipe(map((res: any) => {
         let response = JSON.parse(res);
-        if (response.status === 'SUCCESS=succes') {
+        if (response.status === 'SUCCESS') {
           let user = response.userDTO;
           if (user.img === null) user.img = this.img;
           localStorage.setItem('user', JSON.stringify(user));
@@ -32,7 +33,7 @@ export class OfflineHomeService {
   logout() {
     localStorage.removeItem('JWT');
     localStorage.removeItem('user');
-    window.location.reload();
+    this.router.navigate(['/'])
   }
 
   registration(user: any) {
@@ -47,9 +48,9 @@ export class OfflineHomeService {
   }
 
   getWallPosts() {
-    return this.client.get(this.link + 'GetAllPosts', this.header())
+    return this.client.get(this.link + 'GetAllOfflineWallPosts', this.header())
       .pipe(map((res: any) => {
-        return res;
+        return this.parserImagePost(JSON.parse(res));;
       }))
   }
 
@@ -77,10 +78,9 @@ export class OfflineHomeService {
       'Access-Control-Allow-Headers': 'Content-Type',
     }
 
-    const requestOptions = {
-      headers: new HttpHeaders(headerDict),
+    return {
+      headers: new HttpHeaders(headerDict)
     };
-    return requestOptions;
   }
 
   parser(res: any) {
@@ -90,5 +90,23 @@ export class OfflineHomeService {
       response.push(element);
     });
     return response;
+  }
+
+  parserImagePost(res: any) {
+    let response: any = [];
+    res.forEach((element: any) => {
+      if (element.imagePost === null) element['img'] = this.img;
+      else element['img'] = element.imagePost;
+
+      element.user = this.parserUser(element.user);
+
+      response.push(element);
+    });
+    return response;
+  }
+
+  parserUser(user: any) {
+    if (user.img === null) user.img = this.img;
+    return user;
   }
 }

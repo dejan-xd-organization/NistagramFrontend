@@ -5,6 +5,7 @@ import { OnlineHomeService } from 'src/app/services/online-home.service';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { of } from 'rxjs';
 
 describe('HomeOnlineComponent', () => {
   let component: HomeOnlineComponent;
@@ -30,14 +31,20 @@ describe('HomeOnlineComponent', () => {
       }
     ]
 
+    let resPost = {
+      status: 'SUCCESS'
+    }
+
+    let followingsObservable = of(followers);
+    let respostObservable = of(resPost);
+
     let onlineServiceMock = {
-      getFollowers: jasmine.createSpy('getFollowers')
-        .and.returnValue(followers),
+      getNewFollowers: jasmine.createSpy('getNewFollowers')
+        .and.returnValue(followingsObservable),
       saveNewPost: jasmine.createSpy('saveNewPost')
-        .and.returnValue({}),
-      RegenerateData$: {
-        subscribe: jasmine.createSpy('subscribe')
-      }
+        .and.returnValue(respostObservable),
+      getFollowings: jasmine.createSpy('getFollowings')
+        .and.returnValue(followingsObservable)
     }
 
     await TestBed.configureTestingModule({
@@ -61,8 +68,14 @@ describe('HomeOnlineComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HomeOnlineComponent);
-    online = TestBed.get(OnlineHomeService);
     component = fixture.componentInstance;
+    component['user'] = {
+      id: 1,
+      firstName: "Miko",
+      lastName: "Mikić",
+      username: "miko",
+      img: "../../../../assets/images/resources/user-avatar2.jpg"
+    }
   });
 
   it('should create', () => {
@@ -70,17 +83,15 @@ describe('HomeOnlineComponent', () => {
   });
 
   it('should get all followers', () => {
-    component.getFollowers()
-    expect(component.followers.length).toEqual(2)
+    component.getNewFollowers()
+    expect(component.followers.length).toEqual(2);
   });
 
   it('should add new post', () => {
+    component.newPost.userId = 1;
+    component.newPost.description = 'Test tekst.'
     component.makeNewPost()
-    let post = {
-      user: null,
-      text: null
-    }
-    expect(online.saveNewPost).toHaveBeenCalledWith(post)
+    expect(component.allPosts.length).toEqual(1);
   })
 
 });

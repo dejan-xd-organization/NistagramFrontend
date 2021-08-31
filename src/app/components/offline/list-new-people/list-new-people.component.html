@@ -5,7 +5,8 @@
         <div class="friend-meta">
             <h4><a class="cursor-pointer" [routerLink]="['/' + user.username]">{{user.firstName + ' ' +
                     user.lastName}}</a></h4>
-            <a class="cursor-pointer" (click)="sendFolower(user)" class=" cursor-pointer underline">5 Followers</a>
+            <a class="cursor-pointer" (click)="sendFolower(user)" 
+            class=" cursor-pointer underline">{{user.email}}</a>
         </div>
     </li>
 </ul>
