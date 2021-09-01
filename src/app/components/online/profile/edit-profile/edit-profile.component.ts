@@ -33,10 +33,9 @@ export class EditProfileComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.global.getUserInLocalstorage();
     if (this.user !== null) {
-      this.online.reloadPage();
+      this.defaultInfo()
       let split = this.user.dateOfBirth.split('T');
       this.user.dateOfBirth = split[0];
-      this.defaultInfo()
     }
   }
 
@@ -71,7 +70,7 @@ export class EditProfileComponent implements OnInit {
         this.user.dateOfBirth = split[0];
         this.address = updateUser.address;
         this.isLoading = false;
-        alert('User ' + this.user.username + ' successfuly updated.')
+        alert('User ' + this.user.username + ' successfully updated.')
       }
       else {
         this.isLoading = false;

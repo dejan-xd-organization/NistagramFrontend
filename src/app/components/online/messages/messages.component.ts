@@ -28,7 +28,6 @@ export class MessagesComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.global.getUserInLocalstorage();
     if (this.user != null) {
-      this.online.reloadPage();
       this.getNewFollowers();
       this.getNewFollowings();
       this.getUserInformations();

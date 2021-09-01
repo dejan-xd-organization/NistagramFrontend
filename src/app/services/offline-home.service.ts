@@ -68,6 +68,10 @@ export class OfflineHomeService {
       }))
   }
 
+  findUserById(id: any) {
+    return this.client.get(this.link + 'FindUserById?id=' + id, this.header());
+  }
+
   sendFolower(user: any) {
   }
 

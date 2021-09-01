@@ -70,11 +70,16 @@
                                                 placeholder="write something"></textarea>
                                             <div class="attachments">
                                                 <ul>
-                                                    <li>
-                                                        <i class="fa fa-image" style="color: black;"></i>
-                                                        <label class="fileContainer">
+                                                    <li style="margin-left: initial">
+                                                        <i class=" fa fa-image" style="color: black;"></i>
+                                                        <label style="margin-left: -7px;" class="fileContainer">
                                                             <input type="file">
                                                         </label>
+                                                    </li>
+                                                    <li>
+                                                        <input type="checkbox" [(ngModel)]="newPost.isPublic"
+                                                            id="isPublic" name="isPublic" value="true">
+                                                        <label for="isPublic">Public</label>
                                                     </li>
                                                     <li>
                                                         <button type="submit" (click)="makeNewPost()">
@@ -87,11 +92,10 @@
                                         </form>
                                     </div>
                                 </div>
-
                             </div><!-- add post new box -->
 
 
-                            <div class="loadMore" *ngIf="allPosts.length > 0">
+                            <div *ngIf="allPosts.length > 0">
                                 <div class="central-meta item" *ngFor="let item of allPosts">
                                     <div class="user-post">
                                         <div class="friend-info">
@@ -104,6 +108,14 @@
                                                         item.user.lastName}}</a></ins>
                                                 <span>Published: {{item.timePublis | date : 'dd. MMM yyyy
                                                     HH:mm'}}</span>
+                                                <span *ngIf="!item.isPublic" style="color: coral!important;">
+                                                    Private post
+                                                    <i class="ti-lock" aria-hidden="true"></i>
+                                                </span>
+                                                <span *ngIf="item.isPublic" style="color:#088dcd!important;">
+                                                    Public post
+                                                    <i class="ti-unlock" aria-hidden="true"></i>
+                                                </span>
                                             </div>
                                             <div class="post-meta">
                                                 <div class="description">
@@ -144,10 +156,9 @@
                                             <a [routerLink]="['/' + user.id]"><img src="{{user.img}}" alt=""></a>
                                         </figure>
                                         <div class="page-meta">
-                                            <a [routerLink]="['/' + user.id]">{{user.firstName}}</a>
-                                            <span><i class="ti-comment"></i><a class="cursor-pointer"
-                                                    [routerLink]="['/messages']">Messages
-                                                    <em>{{messagesCount}}</em></a></span>
+                                            <a [routerLink]="['/' + user.id]">{{user.firstName + ' ' +
+                                                user.lastName}}</a>
+                                            <span>{{user.username}}</span>
                                         </div>
                                         <div class="page-likes">
                                             <ul class="nav nav-tabs likes-btn">

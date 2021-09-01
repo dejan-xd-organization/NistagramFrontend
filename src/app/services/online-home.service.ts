@@ -56,7 +56,11 @@ export class OnlineHomeService {
   }
 
   getMyFollowing(id: any, page: any) {
-    return this.client.get(this.link + 'getMyFollowing?id=' + id + '&page=' + page)
+    return this.client.get(this.link + 'GetMyFollowing?id=' + id + '&page=' + page)
+  }
+
+  addFollowing(friendId: any, myId: any) {
+    return this.client.post(this.link + 'AddFollowing', { friendId: friendId, myId: myId })
   }
 
   saveNewPost(post: any) {

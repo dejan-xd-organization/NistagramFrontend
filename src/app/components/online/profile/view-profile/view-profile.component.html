@@ -5,7 +5,8 @@
                 <div class="col-lg-12">
                     <div class="row merged20" id="page-contents">
                         <div class="col-lg-3">
-                            <aside class="sidebar static left" aria-label="userPage" *ngIf="user != null">
+                            <aside class="sidebar static left" aria-label="userPage"
+                                *ngIf="userInfo != null && user !== null">
                                 <div class="widget stick-widget">
                                     <h4 class="widget-title">User page</h4>
                                     <ul class="naves">
@@ -21,7 +22,7 @@
                                                 <span [ngClass]="{'active-tab':activeTab==='images'}">Images</span>
                                             </a>
                                         </li>
-                                        <li *ngIf="user !== null && idActiveProfile==user.id">
+                                        <li *ngIf="userInfo !== null && userInfo.id==user.id">
                                             <i class="ti-link"></i>
                                             <a class="cursor-pointer" (click)="activeTab='friends'">
                                                 <span [ngClass]="{'active-tab':activeTab==='friends'}">Friends</span>
@@ -32,147 +33,249 @@
                             </aside>
                         </div><!-- sidebar -->
 
-                        <div class="col-lg-6" *ngIf="activeTab==='timeline'">
-                            <div class="loadMore" *ngIf="allPosts.length > 0">
-                                <div class="central-meta item" *ngFor="let item of allPosts">
-                                    <div class="user-post">
-                                        <div class="friend-info">
-                                            <figure>
-                                                <img [src]="setImage(item.user.img)" alt="">
-                                            </figure>
-                                            <div class="friend-name">
-                                                <ins><a class="cursor-pointer" [routerLink]="['/' + item.user.id]"
-                                                        title="">{{item.user.firstName + " " +
-                                                        item.user.lastName}}</a></ins>
-                                                <span>Published: {{item.timePublis | date : 'dd. MMM yyyy
-                                                    HH:mm'}}</span>
-                                            </div>
-                                            <div class="post-meta">
-                                                <div class="description">
-                                                    <p>{{item.postDescription}}</p>
+                        <div class="col-lg-6">
+                            <div *ngIf="activeTab==='timeline' && user !== null">
+                                <div *ngFor="let item of allPosts">
+                                    <div class="central-meta item">
+                                        <div class=" user-post">
+                                            <div class="friend-info">
+                                                <figure>
+                                                    <img [src]="setImage(item.user.img)" alt="">
+                                                </figure>
+                                                <div class="friend-name">
+                                                    <ins><a class="cursor-pointer" [routerLink]="['/' + item.user.id]"
+                                                            title="">{{item.user.firstName + " " +
+                                                            item.user.lastName}}</a></ins>
+                                                    <span>Published: {{item.timePublis | date : 'dd. MMM yyyy
+                                                        HH:mm'}}</span>
+                                                    <span *ngIf="!item.isPublic" style="color: coral!important;">
+                                                        Private post
+                                                        <i class="ti-lock" aria-hidden="true"></i>
+                                                    </span>
+                                                    <span *ngIf="item.isPublic" style="color:#088dcd!important;">
+                                                        Public post
+                                                        <i class="ti-unlock" aria-hidden="true"></i>
+                                                    </span>
                                                 </div>
-                                                <img [src]="item.imagePost" alt="">
-                                                <div class="we-video-info">
-                                                    <ul>
-                                                        <li style="cursor:pointer;">
-                                                            <span class="like" data-toggle="tooltip" title="like">
-                                                                <i class="ti-heart"></i>
-                                                                <ins>{{item.like}}</ins>
-                                                            </span>
-                                                        </li>
-                                                        <li>
-                                                            <span class="dislike" data-toggle="tooltip" title="dislike">
-                                                                <i class="ti-heart-broken"></i>
-                                                                <ins>{{item.dislike}}</ins>
-                                                            </span>
-                                                        </li>
-                                                    </ul>
+                                                <div class="post-meta">
+                                                    <div class="description">
+                                                        <p>{{item.postDescription}}</p>
+                                                    </div>
+                                                    <img [src]="item.imagePost" alt="">
+                                                    <div class="we-video-info">
+                                                        <ul>
+                                                            <li style="cursor:pointer;">
+                                                                <span class="like" data-toggle="tooltip" title="like">
+                                                                    <i class="ti-heart"></i>
+                                                                    <ins>{{item.like}}</ins>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="dislike" data-toggle="tooltip"
+                                                                    title="dislike">
+                                                                    <i class="ti-heart-broken"></i>
+                                                                    <ins>{{item.dislike}}</ins>
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- not following -->
+                            </div><!-- online view -->
+
+                            <div *ngIf="activeTab==='timeline' && user === null">
+                                <div *ngFor="let item of allPosts">
+                                    <div class="central-meta item" *ngIf="item.isPublic">
+                                        <div class="user-post">
+                                            <div class="friend-info">
+                                                <figure>
+                                                    <img [src]="setImage(item.user.img)" alt="">
+                                                </figure>
+                                                <div class="friend-name">
+                                                    <ins><a class="cursor-pointer" [routerLink]="['/' + item.user.id]"
+                                                            title="">{{item.user.firstName + " " +
+                                                            item.user.lastName}}</a></ins>
+                                                    <span>Published: {{item.timePublis | date : 'dd. MMM yyyy
+                                                        HH:mm'}}</span>
+                                                    <span *ngIf="!item.isPublic" style="color: coral!important;">
+                                                        Private post
+                                                        <i class="ti-lock" aria-hidden="true"></i>
+                                                    </span>
+                                                    <span *ngIf="item.isPublic" style="color:#088dcd!important;">
+                                                        Public post
+                                                        <i class="ti-unlock" aria-hidden="true"></i>
+                                                    </span>
+                                                </div>
+                                                <div class="post-meta">
+                                                    <div class="description">
+                                                        <p>{{item.postDescription}}</p>
+                                                    </div>
+                                                    <img [src]="item.imagePost" alt="">
+                                                    <div class="we-video-info">
+                                                        <ul>
+                                                            <li style="cursor:pointer;">
+                                                                <span class="like" data-toggle="tooltip" title="like">
+                                                                    <i class="ti-heart"></i>
+                                                                    <ins>{{item.like}}</ins>
+                                                                </span>
+                                                            </li>
+                                                            <li>
+                                                                <span class="dislike" data-toggle="tooltip"
+                                                                    title="dislike">
+                                                                    <i class="ti-heart-broken"></i>
+                                                                    <ins>{{item.dislike}}</ins>
+                                                                </span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div><!-- centerl meta -->
+                            </div><!-- offline view -->
 
-                        <div class="col-lg-6" *ngIf="user != null && activeTab==='images'">
-                            <div class="central-meta">
-                                <ul class="photos">
-                                    <li *ngFor="let i of allPosts">
-                                        <a class="strip" href="{{i.imagePost}}" title="" data-strip-group="mygroup"
-                                            data-strip-group-options="loop: false">
-                                            <img src="{{i.imagePost}}" alt=""></a>
-                                    </li>
-                                </ul>
-                            </div><!-- photos -->
-                        </div><!-- centerl meta -->
+                            <div *ngIf="userInfo != null && activeTab==='images'">
+                                <div *ngIf="isFollowing()">
+                                    <div class="central-meta item">
+                                        <ul class="photos">
+                                            <li *ngFor="let i of allPosts">
+                                                <a class="strip" href="{{i.imagePost}}" title=""
+                                                    data-strip-group="mygroup" data-strip-group-options="loop: false">
+                                                    <img src="{{i.imagePost}}" alt=""></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div><!-- photos -->
+                            </div><!-- centerl meta -->
 
-                        <div class="col-lg-6" *ngIf="user != null && activeTab==='friends'">
-                            <div class="central-meta">
-                                <div class="frnds">
-                                    <ul class="nav nav-tabs">
-                                        <li class="nav-item cursor-pointer">
-                                            <a class="active" (click)="activePane='followers'" data-toggle="tab">
-                                                My Followers
-                                            </a>
-                                            <span>{{followers.length}}</span>
-                                        </li>
-                                        <li class="nav-item cursor-pointer">
-                                            <a class="" (click)="activePane='following'" data-toggle="tab">
-                                                My Following
-                                            </a>
-                                            <span>{{following.length}}</span>
-                                        </li>
-                                    </ul>
-                                    <!-- Tab panes -->
-                                    <div class="tab-content">
-                                        <div [ngClass]="(activePane==='followers')?'tab-pane active fade show':'tab-pane fade'"
-                                            id="followers">
-                                            <ul class="nearby-contct">
-                                                <li *ngFor="let i of followers">
-                                                    <div class="nearly-pepls">
-                                                        <figure>
-                                                            <a [routerLink]="['/' + i.id]" title=""><img src="{{i.img}}"
-                                                                    alt=""></a>
-                                                        </figure>
-                                                        <div class="pepl-info">
-                                                            <h4>{{i.firstName + ' ' + i.lastName}}</h4>
-                                                            <p>{{i.email}}</p>
+                            <div *ngIf="userInfo != null && activeTab==='friends'">
+                                <div class="central-meta">
+                                    <div class="frnds">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item cursor-pointer">
+                                                <a class="active" (click)="activePane='followers'" data-toggle="tab">
+                                                    My Followers
+                                                </a>
+                                                <span>{{followers.length}}</span>
+                                            </li>
+                                            <li class="nav-item cursor-pointer">
+                                                <a class="" (click)="activePane='following'" data-toggle="tab">
+                                                    My Following
+                                                </a>
+                                                <span>{{following.length}}</span>
+                                            </li>
+                                        </ul>
+                                        <!-- Tab panes -->
+                                        <div class="tab-content">
+                                            <div [ngClass]="(activePane==='followers')?'tab-pane active fade show':'tab-pane fade'"
+                                                id="followers">
+                                                <ul class="nearby-contct">
+                                                    <li *ngFor="let i of followers">
+                                                        <div class="nearly-pepls">
+                                                            <figure>
+                                                                <a [routerLink]="['/' + i.id]" title=""><img
+                                                                        src="{{i.img}}" alt=""></a>
+                                                            </figure>
+                                                            <div class="pepl-info">
+                                                                <h4>{{i.firstName + ' ' + i.lastName}}</h4>
+                                                                <p>{{i.email}}</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div [ngClass]="(activePane==='following')?'tab-pane active fade show':'tab-pane fade'"
-                                            id="following">
-                                            <ul class="nearby-contct">
-                                                <li *ngFor="let i of following">
-                                                    <div class="nearly-pepls">
-                                                        <figure>
-                                                            <a [routerLink]="['/' + i.id]" title=""><img src="{{i.img}}"
-                                                                    alt=""></a>
-                                                        </figure>
-                                                        <div class="pepl-info">
-                                                            <h4>{{i.firstName + ' ' + i.lastName}}</h4>
-                                                            <p>{{i.email}}</p>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div [ngClass]="(activePane==='following')?'tab-pane active fade show':'tab-pane fade'"
+                                                id="following">
+                                                <ul class="nearby-contct">
+                                                    <li *ngFor="let i of following">
+                                                        <div class="nearly-pepls">
+                                                            <figure>
+                                                                <a [routerLink]="['/' + i.id]" title=""><img
+                                                                        src="{{i.img}}" alt=""></a>
+                                                            </figure>
+                                                            <div class="pepl-info">
+                                                                <h4>{{i.firstName + ' ' + i.lastName}}</h4>
+                                                                <p>{{i.email}}</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div><!-- centerl meta -->
+
+
                         </div><!-- centerl meta -->
+
+
+
+
 
                         <div class="col-lg-3">
-                            <aside class="sidebar static right" aria-label="yourPage" *ngIf="user != null">
+                            <aside class="sidebar static right" aria-label="yourPage" *ngIf="userInfo != null">
                                 <div class="widget stick-widget">
-                                    <h4 class="widget-title">Your page</h4>
+                                    <h4 class="widget-title">User info</h4>
                                     <div class="your-page">
                                         <figure>
-                                            <a [routerLink]="['/' + user.id]"><img src="{{user.img}}" alt=""></a>
+                                            <a [routerLink]="['/' + userInfo.id]"><img [src]="setImage(userInfo.img)"
+                                                    alt=""></a>
                                         </figure>
                                         <div class="page-meta">
-                                            <a [routerLink]="['/' + user.id]">{{user.firstName}}</a>
-                                            <span><i class="ti-comment"></i><a class="cursor-pointer"
-                                                    [routerLink]="['/messages']">Messages
-                                                    <em>{{messagesCount}}</em></a></span>
+                                            <a [routerLink]="['/' + userInfo.id]">{{userInfo.firstName + ' ' +
+                                                userInfo.lastName}}</a>
                                         </div>
-                                        <div class="page-likes">
-                                            <ul class="nav nav-tabs likes-btn">
-                                                <li class="nav-item"><a class="active" href="#link1"
-                                                        data-toggle="tab">followers</a></li>
-                                                <li class="nav-item"><a class="" href="#link2"
-                                                        data-toggle="tab">following</a></li>
-                                            </ul>
-                                            <!-- Tab panes -->
-                                            <div class="tab-content">
-                                                <div class="tab-pane active fade show " id="link1">
-                                                    <span><i class="ti-heart"></i>{{user.followers}}</span>
-                                                </div>
-                                                <div class="tab-pane fade" id="link2">
-                                                    <span><i class="ti-eye"></i>{{user.followings}}</span>
+                                        <div class="page-meta" *ngIf="userInfo.isPublicProfile === true">
+                                            <span class="font-size-10">Username: {{userInfo.username}}</span>
+                                            <span class="font-size-10">Email: {{userInfo.email}}</span>
+                                            <span class="font-size-10">Address: {{userInfo.address === null ? 'N/A' :
+                                                userInfo.address.city + ', ' + userInfo.address.country}}</span>
+                                            <span class="font-size-10">Date of birth: {{userInfo.dateOfBirth | date:'dd.
+                                                MMM yyyy'}}</span>
+                                            <span class="font-size-10">Followers: {{userInfo.followers === null ? 'N/A'
+                                                :
+                                                userInfo.followers}}</span>
+                                            <span class="font-size-10">Following: {{userInfo.followings === null ? 'N/A'
+                                                :
+                                                userInfo.followings}}</span>
+                                            <span class="font-size-10">Relationship: {{userInfo.relationship === null ?
+                                                'N/A' :
+                                                userInfo.relationship}}</span>
+                                            <span class="font-size-10">Gender: {{userInfo.sex === null ? 'N/A' :
+                                                userInfo.sex}}</span>
+                                        </div>
+                                        <div class="page-meta" *ngIf="userInfo.isPublicProfile !== true">
+                                            <span style="color:coral;font-size: 15px;">Private profile</span>
+                                        </div>
+                                        <div *ngIf="user !== null">
+                                            <div class="submit-btns" *ngIf="(user.id !== userInfo.id) && isFollowing()">
+                                                <button class="mtr-btn signin" (click)="addFollowing()"
+                                                    style="width: inherit;" type="button">
+                                                    <span style="color: white;">Follow</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="page-likes" *ngIf="user !== null && (userInfo.id === user.id)">
+                                            <div *ngIf="userInfo.isPublicProfile === true">
+                                                <ul class="nav nav-tabs likes-btn">
+                                                    <li class="nav-item"><a class="active" href="#link1"
+                                                            data-toggle="tab">followers</a></li>
+                                                    <li class="nav-item"><a class="" href="#link2"
+                                                            data-toggle="tab">following</a></li>
+                                                </ul>
+                                                <!-- Tab panes -->
+                                                <div class="tab-content">
+                                                    <div class="tab-pane active fade show " id="link1">
+                                                        <span><i class="ti-heart"></i>{{userInfo.followers}}</span>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="link2">
+                                                        <span><i class="ti-eye"></i>{{userInfo.followings}}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

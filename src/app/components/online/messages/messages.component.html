@@ -126,13 +126,9 @@
                                             <a [routerLink]="['/' + user.id]"><img src="{{user.img}}" alt=""></a>
                                         </figure>
                                         <div class="page-meta">
-                                            <a [routerLink]="['/' + user.id]">{{user.firstName}}</a>
-                                            <span><i class="ti-comment"></i><a class="cursor-pointer"
-                                                    [routerLink]="['/messages']">Messages
-                                                    <em>{{messagesCount}}</em></a></span>
-                                            <!--<span><i class="ti-bell"></i><a class="cursor-pointer"
-                                                    [routerLink]="['/notifications']">Notifications
-                                                    <em>{{notificationsCount}}</em></a></span>-->
+                                            <a [routerLink]="['/' + user.id]">{{user.firstName + ' ' +
+                                                user.lastName}}</a>
+                                            <span>{{user.username}}</span>
                                         </div>
                                         <div class="page-likes">
                                             <ul class="nav nav-tabs likes-btn">
