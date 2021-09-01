@@ -14,8 +14,8 @@
             <li><a class="cursor-pointer" [routerLink]="['/messages']">Messages</a></li>
             <li><span>Account</span>
                 <ul>
-                    <li><a class="cursor-pointer" [routerLink]="['/' + user.username]">View Profile</a></li>
-                    <li><a class="cursor-pointer" [routerLink]="['/' + user.username + '/edit']">Edit Profile</a></li>
+                    <li><a class="cursor-pointer" [routerLink]="['/' + user.id]">View Profile</a></li>
+                    <li><a class="cursor-pointer" [routerLink]="['/' + user.id + '/edit']">Edit Profile</a></li>
                 </ul>
             </li>
             <li><a class="cursor-pointer" (click)="logout()">Log out</a></li>
@@ -41,7 +41,7 @@
                 <button data-ripple><i class="ti-search"></i></button>
             </form>
         </div>
-        <div class="filter-user" style="width:300px;" [ngClass]="{'show':isShow,'hide':!isShow}">
+        <div class="filter-user" style="width:300px;margin-left:50px;" [ngClass]="{'show':isShow,'hide':!isShow}">
             <div class="float-left body" *ngFor="let item of filterUser">
                 <a class="cursor-pointer" (click)="openProfile(item)">
                     <div class="float-left" style="width:50px;">
@@ -56,28 +56,7 @@
             </div>
         </div>
         <ul class="setting-area" *ngIf="isOnlineOffline()">
-            <li><a href="#" title="Home" data-ripple=""><i class="ti-home"></i></a></li>
-            <li>
-                <a href="#" title="Messages" data-ripple=""><i
-                        class="ti-comment"></i><span>{{messages.length}}</span></a>
-                <div class="dropdowns">
-                    <span>{{messages.length > 0 ? messages.length + ' New Messages' : 'No Messages'}}</span>
-                    <ul class="drops-menu">
-                        <li *ngFor="let item of messages">
-                            <a class="cursor-pointer" [routerLink]="['/messages/' + item.id]">
-                                <img src="{{item.user.img}}" alt="">
-                                <div class="mesg-meta">
-                                    <h6>{{item.user.firstName + " " + item.user.lastName}}</h6>
-                                    <span>{{item.text}}</span>
-                                    <i>{{item.datetime}}</i>
-                                </div>
-                            </a>
-                            <span class="tag green">New</span>
-                        </li>
-                    </ul>
-                    <a href="#" title="" class="more-mesg">View More</a>
-                </div>
-            </li>
+            <li>{{user.firstName + ' ' + user.lastName}}</li>
         </ul>
         <ul class="setting-area " *ngIf="!isOnlineOffline()">
             <li><a class="cursor-pointer" [routerLink]="['/login']" data-ripple="">Login</a>
@@ -88,7 +67,7 @@
             <img src="{{user.img}}" alt="" width="50px" height="50px">
             <span class="status f-online"></span>
             <div class="user-setting">
-                <a class="cursor-pointer" [routerLink]="['/' + user.username]"><i class="ti-user"></i> View Profile</a>
+                <a class="cursor-pointer" [routerLink]="['/' + user.id]"><i class="ti-user"></i> View Profile</a>
                 <a class="cursor-pointer" [routerLink]="['/edit']"><i class="ti-pencil-alt"></i>Edit
                     Profile</a>
                 <a class="cursor-pointer" (click)="logout()"><i class="ti-power-off"></i>Log out</a>

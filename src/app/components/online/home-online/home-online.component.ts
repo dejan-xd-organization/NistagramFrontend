@@ -25,7 +25,8 @@ export class HomeOnlineComponent implements OnInit {
   constructor(private global: Global, private online: OnlineHomeService, private offline: OfflineHomeService) {
     this.newPost = {
       userId: null,
-      description: null
+      description: null,
+      isPublic: false
     }
     this.newComment = {
       user: null,
@@ -35,7 +36,6 @@ export class HomeOnlineComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.online.reloadPage();
     this.user = this.global.getUserInLocalstorage();
     this.getNewFollowers();
     this.getNewFollowings();
@@ -45,10 +45,20 @@ export class HomeOnlineComponent implements OnInit {
 
   getWallPosts() {
     this.online.getWallPosts().subscribe((res: any) => {
-      this.allPosts = res;
+      this.allPosts = this.getAllPost(res);
     }, (error: any) => {
       this.allPosts = [];
     })
+  }
+
+  getAllPost(posts: any) {
+    let resPost: any = []
+    posts.forEach((element: any) => {
+      if (this.isFollowing(element)) {
+        resPost.push(element);
+      }
+    });
+    return resPost;
   }
 
   setImage(item: any) {
@@ -121,6 +131,16 @@ export class HomeOnlineComponent implements OnInit {
     this.online.getNewFollowings(this.user.id).subscribe((res: any) => {
       this.following = res;
     });
+  }
+
+  isFollowing(post: any) {
+    if (post.user.id.toString() === this.user.id.toString()) return true;
+    if (post.isPublic) {
+      return true;
+    } else {
+      if (this.followers === null && this.followers.length == 0) return false;
+      else return (this.followers.filter((x: any) => x.id.toString() === post.user.id.toString()).length > 0)
+    }
   }
 
   logout() {

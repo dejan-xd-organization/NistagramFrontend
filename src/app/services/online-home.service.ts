@@ -56,7 +56,11 @@ export class OnlineHomeService {
   }
 
   getMyFollowing(id: any, page: any) {
-    return this.client.get(this.link + 'getMyFollowing?id=' + id + '&page=' + page)
+    return this.client.get(this.link + 'GetMyFollowing?id=' + id + '&page=' + page)
+  }
+
+  addFollowing(friendId: any, myId: any) {
+    return this.client.post(this.link + 'AddFollowing', { friendId: friendId, myId: myId })
   }
 
   saveNewPost(post: any) {
@@ -109,6 +113,14 @@ export class OnlineHomeService {
 
   changePassword(id: any, oldPassword: any, newPassword: any) {
     return this.client.put(this.link + 'ChangePassword', { id: id, oldPassword: oldPassword, newPassword: newPassword });
+  }
+
+  getChatByUser(friendId: any, userId: any) {
+    return this.client.get(this.link + 'GetChatByUser?friendId=' + friendId + '&userId=' + userId);
+  }
+
+  sendMessage(text: any, userId: any, friendId: any) {
+    return this.client.post(this.link + 'SendMessage', { text: text, userId: userId, friendId: friendId })
   }
 
   parser(res: any) {
